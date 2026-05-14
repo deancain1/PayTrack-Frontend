@@ -1,0 +1,218 @@
+$primary-dark: #001f3f; // Navy from image_bc6af8.png
+$text-muted: #666;
+$bg-light: #f8faff;
+$border-color: #e0e6ed;
+
+.page-container {
+  font-family: 'Inter', sans-serif;
+  background-color: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 5%;
+  
+  .logo {
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: $primary-dark;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+
+    a {
+      text-decoration: none;
+      color: $text-muted;
+      font-size: 0.9rem;
+    }
+
+    .btn-login-header {
+      background: $primary-dark;
+      color: white;
+      border: none;
+      padding: 0.6rem 1.8rem;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  }
+}
+
+.main-content {
+  display: flex;
+  flex: 1;
+  padding: 2rem 5%;
+  gap: 4rem;
+  align-items: flex-start;
+}
+
+.hero-section {
+  flex: 1;
+  
+  .hero-title {
+    font-size: 3.5rem;
+    color: $primary-dark;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-subtitle {
+    color: $text-muted;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    max-width: 500px;
+    margin-bottom: 3rem;
+  }
+
+  .security-card {
+    max-width: 450px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+
+    .image-placeholder img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-footer {
+      background-color: #eef4ff;
+      padding: 1.5rem;
+
+      .badge {
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        color: $primary-dark;
+        margin-bottom: 0.5rem;
+      }
+
+      p {
+        font-size: 0.85rem;
+        color: #555;
+        margin: 0;
+      }
+    }
+  }
+}
+
+.form-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+
+  .form-container {
+    width: 100%;
+    max-width: 450px;
+    border: 1px solid $border-color;
+    padding: 3rem;
+    border-radius: 8px;
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      color: $primary-dark;
+    }
+
+    .form-intro {
+      color: $text-muted;
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+    }
+  }
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+
+  label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: $text-muted;
+    margin-bottom: 0.5rem;
+  }
+
+  .input-wrapper {
+    display: flex;
+    align-items: center;
+    border: 1px solid $border-color;
+    background: #fcfcfc;
+    padding: 0.8rem;
+    border-radius: 4px;
+
+    .input-icon {
+      margin-right: 10px;
+      opacity: 0.5;
+    }
+
+    input {
+      border: none;
+      background: transparent;
+      outline: none;
+      width: 100%;
+      font-size: 0.95rem;
+    }
+  }
+}
+
+.btn-submit {
+  width: 100%;
+  background: $primary-dark;
+  color: white;
+  border: none;
+  padding: 1.2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.login-redirect {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: $text-muted;
+
+  a {
+    color: $primary-dark;
+    font-weight: 700;
+    text-decoration: none;
+  }
+}
+
+.footer {
+  background-color: #dbeafe;
+  padding: 2rem 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: $primary-dark;
+
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      opacity: 0.7;
+    }
+  }
+}

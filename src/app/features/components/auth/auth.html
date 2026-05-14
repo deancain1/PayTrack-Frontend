@@ -1,0 +1,156 @@
+<div class="page-container">
+  <!-- Navigation Header -->
+  <header class="navbar">
+    <div class="logo">WorkLedger</div>
+
+    <nav class="nav-links">
+      <a href="#">Features</a>
+      <a href="#">How It Works</a>
+
+      <!-- PrimeNG Button -->
+      <button pButton type="button" label="Login" class="btn-login-header"></button>
+    </nav>
+  </header>
+
+  <main class="main-content">
+    <!-- Left Column: Hero Section -->
+    <section class="hero-section">
+      <h1 class="hero-title">
+        Smart Attendance. Accurate Salary. Real-Time Tracking.
+      </h1>
+
+      <p class="hero-subtitle">
+        A GPS-based attendance and salary computation system that automatically calculates work hours,
+        tracks employee attendance, and generates accurate earnings for every shift.
+      </p>
+
+      <div class="security-card">
+        <div class="image-placeholder">
+          <img src="assets/workforce.jpg" alt="Workforce Tracking System" />
+        </div>
+
+        <div class="card-footer">
+          <div class="badge">
+            <span class="icon">⏱️</span> REAL-TIME ATTENDANCE SYSTEM
+          </div>
+          <p>
+            Track employee check-in and check-out using secure GPS verification with automatic salary computation based on actual hours worked.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right Column: Registration Form -->
+    <section class="form-section">
+      <div class="form-container">
+        <h2>Create Account</h2>
+
+        <p class="form-intro">
+          Register your company or employee account to start using the attendance and salary tracking system.
+        </p>
+
+        <form (ngSubmit)="onRegister(registerForm)" #registerForm="ngForm">
+
+          <!-- FULL NAME -->
+          <div class="form-group">
+            <label>FULL NAME</label>
+
+            <div class="input-wrapper">
+              <span class="input-icon">👤</span>
+
+              <input
+                pInputText
+                type="text"
+                name="fullName"
+                [(ngModel)]="model.fullName"
+                placeholder="John Doe"
+              />
+            </div>
+          </div>
+
+          <!-- EMAIL -->
+          <div class="form-group">
+            <label>WORK EMAIL</label>
+
+            <div class="input-wrapper">
+              <span class="input-icon">✉️</span>
+
+              <input
+                pInputText
+                type="email"
+                name="email"
+                [(ngModel)]="model.email"
+                placeholder="john@company.com"
+              />
+            </div>
+          </div>
+
+          <!-- COMPANY -->
+          <div class="form-group">
+            <label>COMPANY NAME</label>
+
+            <div class="input-wrapper">
+              <span class="input-icon">🏢</span>
+
+              <input
+                pInputText
+                type="text"
+                name="companyName"
+                [(ngModel)]="model.companyName"
+                placeholder="Your Company Name"
+              />
+            </div>
+          </div>
+
+          <!-- PASSWORD -->
+          <div class="form-group">
+            <label>PASSWORD</label>
+
+            <div class="input-wrapper">
+              <span class="input-icon">🔒</span>
+
+              <p-password
+                [(ngModel)]="model.password"
+                name="password"
+                [toggleMask]="true"
+                [feedback]="false"
+                placeholder="••••••••"
+              ></p-password>
+            </div>
+          </div>
+
+          <!-- BUTTON -->
+          <button
+            pButton
+            type="submit"
+            label="Create Account"
+            icon="pi pi-arrow-right"
+            class="btn-submit"
+          ></button>
+
+        </form>
+
+        <p class="login-redirect">
+          Already registered? <a href="#">Login here</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-left">
+      <strong>WorkLedger</strong>
+      <p>
+        © 2026 WorkLedger. Attendance and salary computation system with real-time tracking.
+      </p>
+    </div>
+
+    <div class="footer-links">
+      <a href="#">System Overview</a>
+      <a href="#">Attendance Guide</a>
+      <a href="#">Salary Computation</a>
+      <a href="#">Support</a>
+    </div>
+  </footer>
+</div>
