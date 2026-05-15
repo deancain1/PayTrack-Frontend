@@ -9,6 +9,8 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth-service';
 import { MessageService } from 'primeng/api';
 import { AuthResponse } from '../../models/auth-response';
+import { LoginModel } from '../../models/users/user-login-model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -28,25 +30,34 @@ import { AuthResponse } from '../../models/auth-response';
 
 export class Auth {
 
- 
+  isFlipped: boolean = false;
 
   model = {
     fullName: '',
     companyName: '',
-    role: 'User',
+    role: 'CompanyAdmin',
     email: '',
     password: '',
     profilePicture: ''
   };
 
+  loginModel = {
+    email: '',
+    password: ''
+  };
+
   constructor(
     private authService: AuthService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private router: Router
   ) {}
 
+ toggleForm(event:Event){
+  event.preventDefault();
+  this.isFlipped = !this.isFlipped;
+ }
 
-
-  // ---------------- REGISTER ----------------
+  //REGISTER
 onRegister(registerForm: NgForm) {
   if (registerForm.invalid) {
     this.messageService.add({
@@ -85,7 +96,7 @@ onRegister(registerForm: NgForm) {
       console.log("STATUS:", err.status);
       console.log("ERROR BODY:", err.error);
 
-      // try to extract backend validation message
+      
       const backendMessage =
         err?.error?.message ||
         err?.error?.title ||
@@ -101,4 +112,65 @@ onRegister(registerForm: NgForm) {
     }
   });
 }
+
+// Login
+ onLogin(loginForm: NgForm) {
+
+    if (loginForm.invalid) {
+
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Validation',
+        detail: 'Please enter your credentials.'
+      });
+
+      return;
+    }
+
+    this.authService.login(this.loginModel).subscribe({
+
+      next: (response) => {
+
+        this.authService.saveToken(response.token);
+
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Login Successful',
+          detail: 'Welcome back!'
+        });
+
+        loginForm.resetForm();
+
+        switch (response.role) {
+
+          case 'CompanyAdmin':
+            this.router.navigate(['/company-admin-dashboard']);
+            break;
+
+          case 'Admin':
+            this.router.navigate(['/admin-dashboard']);
+            break;
+
+          case 'Employee':
+            this.router.navigate(['/employee-dashboard']);
+            break;
+
+          default:
+            this.router.navigate(['/']);
+            break;
+        }
+      },
+
+      error: (error) => {
+
+        console.error(error);
+
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Login Failed',
+          detail: error?.error?.message || 'Invalid email or password.'
+        });
+      }
+    });
+  }
 }
