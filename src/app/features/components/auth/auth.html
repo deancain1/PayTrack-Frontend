@@ -1,185 +1,26 @@
-<div class="page-container">
-  <header class="navbar">
-    <div class="logo">PayTrack</div>
+<button
+  pButton
+  type="submit"
+  icon="pi pi-sign-in"
+  label="Login"
+  class="btn-submit"
+></button>
 
-    <nav class="nav-links">
-      <a href="#">Features</a>
-      <a href="#">How It Works</a>
-
-      <button pButton type="button" label="Login" class="btn-login-header" (click)="isFlipped = true"></button>
-    </nav>
-  </header>
-
-  <main class="main-content">
-    <section class="hero-section">
-      <h1 class="hero-title">
-        Smart Attendance. Accurate Salary. Real-Time Tracking.
-      </h1>
-      <div class="security-card">
-        <div class="card-footer">
-          <div class="badge">
-            <span class="icon">⏱️</span> REAL-TIME ATTENDANCE SYSTEM
-          </div>
-          <p>
-            Track employee check-in and check-out using secure GPS verification with automatic salary computation based on actual hours worked.
-          </p>
-        </div>
-        <div class="image-placeholder">
-          <img src="assets/workforce.jpg" alt="Workforce Tracking System" />
-        </div>
-      </div>
-    </section>
-
-    <section class="form-section">
-      <div class="form-flipper" [class.flipped]="isFlipped">
-        
-        <div class="form-card front-card">
-          <h2>Create Account</h2>
-          <p class="form-intro">
-            Register your company to start using the attendance and salary tracking system.
-          </p>
-
-          <form (ngSubmit)="onRegister(registerForm)" #registerForm="ngForm">
-
-            <div class="form-group">
-              <label>FULL NAME</label>
-              <div class="input-wrapper">
-                <span class="input-icon"><i class="pi pi-user"></i></span>
-                <input
-                  pInputText
-                  type="text"
-                  name="fullName"
-                  [(ngModel)]="model.fullName"
-                  placeholder="John Doe"
-                />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label>WORK EMAIL</label>
-              <div class="input-wrapper">
-                <span class="input-icon"><i class="pi pi-envelope"></i></span>
-                <input
-                  pInputText
-                  type="email"
-                  name="email"
-                  [(ngModel)]="model.email"
-                  placeholder="john@company.com"
-                />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label>COMPANY NAME</label>
-              <div class="input-wrapper">
-                <span class="input-icon"><i class="pi pi-building"></i></span>
-                <input
-                  pInputText
-                  type="text"
-                  name="companyName"
-                  [(ngModel)]="model.companyName"
-                  placeholder="Your Company Name"
-                />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label>PASSWORD</label>
-              <div class="input-wrapper">
-                <span class="input-icon"><i class="pi pi-lock"></i></span>
-                <p-password
-                  [(ngModel)]="model.password"
-                  name="password"
-                  [toggleMask]="true"
-                  [feedback]="false"
-                  placeholder="••••••••"
-                ></p-password>
-              </div>
-            </div>
-
-            <button
-              pButton
-              type="submit"
-              icon="pi pi-arrow-right"
-              label="Create Account"
-              class="btn-submit"
-            ></button>
-
-          </form>
-
-          <p class="login-redirect">
-            Already registered? <a href="#" (click)="toggleForm($event)">Login here</a>
-          </p>
-        </div>
-
-        <div class="form-card back-card">
-          <h2>Welcome Back</h2>
-          <p class="form-intro">
-            Sign in to manage your team's real-time attendance and payroll tracking.
-          </p>
-
-          <form (ngSubmit)="onLogin(loginForm)" #loginForm="ngForm">
-
-            <div class="form-group">
-              <label>WORK EMAIL</label>
-              <div class="input-wrapper">
-                <span class="input-icon"><i class="pi pi-envelope"></i></span>
-                <input
-                  pInputText
-                  type="email"
-                  name="loginEmail"
-                  [(ngModel)]="loginModel.email"
-                  placeholder="john@company.com"
-                />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label>PASSWORD</label>
-              <div class="input-wrapper">
-                <span class="input-icon"><i class="pi pi-lock"></i></span>
-                <p-password
-                  [(ngModel)]="loginModel.password"
-                  name="loginPassword"
-                  [toggleMask]="true"
-                  [feedback]="false"
-                  placeholder="••••••••"
-                ></p-password>
-              </div>
-            </div>
-
-            <button
-              pButton
-              type="submit"
-              icon="pi pi-sign-in"
-              label="Login"
-              class="btn-submit"
-            ></button>
-
-          </form>
-
-          <p class="login-redirect">
-            Don't have an account? <a href="#" (click)="toggleForm($event)">Register here</a>
-          </p>
-        </div>
-
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="footer-left">
-      <strong>PayTrack</strong>
-      <p>
-        © 2026 PayTrack. Attendance and salary computation system with real-time tracking.
-      </p>
-    </div>
-
-    <div class="footer-links">
-      <a href="#">System Overview</a>
-      <a href="#">Attendance Guide</a>
-      <a href="#">Salary Computation</a>
-      <a href="#">Support</a>
-    </div>
-  </footer>
+<div class="divider">
+  <span>OR</span>
 </div>
+
+<button
+  pButton
+  type="button"
+  class="google-btn"
+  (click)="signInWithGoogle()"
+>
+  <img
+    src="https://developers.google.com/identity/images/g-logo.png"
+    alt="Google"
+    class="google-icon"
+  />
+
+  <span>Continue with Google</span>
+</button>

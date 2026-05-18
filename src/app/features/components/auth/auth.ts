@@ -11,6 +11,7 @@ import { MessageService } from 'primeng/api';
 import { AuthResponse } from '../../models/auth-response';
 import { LoginModel } from '../../models/users/user-login-model';
 import { Router } from '@angular/router';
+import { SocialAuthService, GoogleLoginProvider, SocialUser } from '@abacritt/angularx-social-login';
 
 @Component({
   selector: 'app-auth',
@@ -49,7 +50,8 @@ export class Auth {
   constructor(
     private authService: AuthService,
     private messageService: MessageService,
-    private router: Router
+    private router: Router,
+    private socialAuthService: SocialAuthService
   ) {}
 
  toggleForm(event:Event){
@@ -173,4 +175,20 @@ onRegister(registerForm: NgForm) {
       }
     });
   }
+  signInWithGoogle(): void {
+
+  this.socialAuthService
+    .signIn(GoogleLoginProvider.PROVIDER_ID)
+    .then((user: SocialUser) => {
+
+      console.log(user);
+
+      // Send token to backend
+      // user.idToken
+
+    })
+    .catch(err => {
+      console.error(err);
+    });
+}
 }

@@ -288,4 +288,54 @@ $border-color: #e0e6ed;
       }
     }
   }
+  .divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1.5rem 0;
+  position: relative;
+
+  span {
+    background: white;
+    padding: 0 1rem;
+    font-size: 0.85rem;
+    color: #777;
+    z-index: 1;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    background: #e5e7eb;
+  }
+}
+
+.google-btn {
+  width: 100%;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+
+  background: white !important;
+  color: #333 !important;
+
+  border: 1px solid #dcdcdc !important;
+
+  padding: 0.9rem;
+  border-radius: 12px;
+
+  transition: 0.2s ease;
+
+  &:hover {
+    background: #f8f9fa !important;
+  }
+}
+
+.google-icon {
+  width: 20px;
+  height: 20px;
+}
 }
