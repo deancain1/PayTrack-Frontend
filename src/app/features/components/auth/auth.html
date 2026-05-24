@@ -6,161 +6,261 @@
       <a href="#">Features</a>
       <a href="#">How It Works</a>
 
-      <button pButton type="button" label="Login" class="btn-login-header" (click)="isFlipped = true"></button>
+      <button
+        pButton
+        type="button"
+        label="Login"
+        class="btn-login-header"
+        (click)="isFlipped = true"
+      ></button>
     </nav>
   </header>
 
   <main class="main-content">
+
+    <!-- HERO SECTION -->
     <section class="hero-section">
       <h1 class="hero-title">
         Smart Attendance. Accurate Salary. Real-Time Tracking.
       </h1>
+
       <div class="security-card">
         <div class="card-footer">
           <div class="badge">
-            <span class="icon">⏱️</span> REAL-TIME ATTENDANCE SYSTEM
+            <span class="icon">⏱️</span>
+            REAL-TIME ATTENDANCE SYSTEM
           </div>
+
           <p>
-            Track employee check-in and check-out using secure GPS verification with automatic salary computation based on actual hours worked.
+            Track employee check-in and check-out using secure GPS verification
+            with automatic salary computation based on actual hours worked.
           </p>
         </div>
+
         <div class="image-placeholder">
-          <img src="assets/workforce.jpg" alt="Workforce Tracking System" />
+          <img
+            src="assets/workforce.jpg"
+            alt="Workforce Tracking System"
+          />
         </div>
       </div>
     </section>
 
+    <!-- FORM SECTION -->
     <section class="form-section">
       <div class="form-flipper" [class.flipped]="isFlipped">
-        
+
+        <!-- REGISTER CARD -->
         <div class="form-card front-card">
-          <h2>Create Account</h2>
-          <p class="form-intro">
-            Register your company to start using the attendance and salary tracking system.
-          </p>
+          <div class="form-body">
 
-          <form (ngSubmit)="onRegister(registerForm)" #registerForm="ngForm">
+            <h2>Create Account</h2>
 
-            <div class="form-group">
-              <label>FULL NAME</label>
-              <div class="input-wrapper">
-                <span class="input-icon"><i class="pi pi-user"></i></span>
-                <input
-                  pInputText
-                  type="text"
-                  name="fullName"
-                  [(ngModel)]="model.fullName"
-                  placeholder="John Doe"
-                />
+            <p class="form-intro">
+              Register your company to start using the attendance and salary tracking system.
+            </p>
+
+            <form (ngSubmit)="onRegister(registerForm)" #registerForm="ngForm">
+
+              <div class="form-group">
+                <label>FULL NAME</label>
+                <div class="input-wrapper">
+                  <span class="input-icon">
+                    <i class="pi pi-user"></i>
+                  </span>
+
+                  <input
+                    pInputText
+                    type="text"
+                    name="fullName"
+                    [(ngModel)]="model.fullName"
+                    [readonly]="isGoogleUser"
+                    placeholder="John Doe"
+                  />
+                </div>
               </div>
-            </div>
 
-            <div class="form-group">
-              <label>WORK EMAIL</label>
-              <div class="input-wrapper">
-                <span class="input-icon"><i class="pi pi-envelope"></i></span>
-                <input
-                  pInputText
-                  type="email"
-                  name="email"
-                  [(ngModel)]="model.email"
-                  placeholder="john@company.com"
-                />
+              <div class="form-group">
+                <label>WORK EMAIL</label>
+                <div class="input-wrapper">
+                  <span class="input-icon">
+                    <i class="pi pi-envelope"></i>
+                  </span>
+
+                  <input
+                    pInputText
+                    type="email"
+                    name="email"
+                    [(ngModel)]="model.email"
+                    [readonly]="isGoogleUser"
+                    placeholder="john@company.com"
+                  />
+                </div>
               </div>
-            </div>
 
-            <div class="form-group">
-              <label>COMPANY NAME</label>
-              <div class="input-wrapper">
-                <span class="input-icon"><i class="pi pi-building"></i></span>
-                <input
-                  pInputText
-                  type="text"
-                  name="companyName"
-                  [(ngModel)]="model.companyName"
-                  placeholder="Your Company Name"
-                />
+              <div class="form-group">
+                <label>COMPANY NAME</label>
+                <div class="input-wrapper">
+                  <span class="input-icon">
+                    <i class="pi pi-building"></i>
+                  </span>
+
+                  <input
+                    pInputText
+                    type="text"
+                    name="companyName"
+                    [(ngModel)]="model.companyName"
+                    placeholder="Your Company Name"
+                  />
+                </div>
               </div>
-            </div>
 
-            <div class="form-group">
-              <label>PASSWORD</label>
-              <div class="input-wrapper">
-                <span class="input-icon"><i class="pi pi-lock"></i></span>
-                <p-password
-                  [(ngModel)]="model.password"
-                  name="password"
-                  [toggleMask]="true"
-                  [feedback]="false"
-                  placeholder="••••••••"
-                ></p-password>
+              <div class="form-group">
+                <label>PASSWORD</label>
+                <div class="input-wrapper password-wrapper">
+                  <span class="input-icon">
+                    <i class="pi pi-lock"></i>
+                  </span>
+
+                  <p-password
+                    [(ngModel)]="model.password"
+                    name="password"
+                    [disabled]="isGoogleUser"
+                    [toggleMask]="true"
+                    [feedback]="false"
+                    placeholder="••••••••"
+                    styleClass="full-width-password"
+                  ></p-password>
+                </div>
               </div>
-            </div>
 
-            <button
-              pButton
-              type="submit"
-              icon="pi pi-arrow-right"
-              label="Create Account"
-              class="btn-submit"
-            ></button>
+              <div class="form-actions">
+                <button
+                  pButton
+                  type="submit"
+                  icon="pi pi-arrow-right"
+                  label="Create Account"
+                  class="btn-submit"
+                ></button>
+              </div>
 
-          </form>
+              <div class="divider">
+                <span>OR</span>
+              </div>
 
-          <p class="login-redirect">
-            Already registered? <a href="#" (click)="toggleForm($event)">Login here</a>
-          </p>
+              <div class="google-wrapper">
+                <div class="google-fixed">
+                  <asl-google-signin-button
+                    type="standard"
+                    size="large"
+                    theme="outline"
+                    text="continue_with"
+                    shape="rectangular"
+                    logo_alignment="left"
+                    [width]="300"
+                  >
+                  </asl-google-signin-button>
+                </div>
+              </div>
+
+            </form>
+
+            <p class="login-redirect">
+              Already registered?
+              <a href="#" (click)="toggleForm($event)">
+                Login here
+              </a>
+            </p>
+
+          </div>
         </div>
 
+        <!-- LOGIN CARD -->
         <div class="form-card back-card">
-          <h2>Welcome Back</h2>
-          <p class="form-intro">
-            Sign in to manage your team's real-time attendance and payroll tracking.
-          </p>
+          <div class="form-body">
 
-          <form (ngSubmit)="onLogin(loginForm)" #loginForm="ngForm">
+            <h2>Welcome Back</h2>
 
-            <div class="form-group">
-              <label>WORK EMAIL</label>
-              <div class="input-wrapper">
-                <span class="input-icon"><i class="pi pi-envelope"></i></span>
-                <input
-                  pInputText
-                  type="email"
-                  name="loginEmail"
-                  [(ngModel)]="loginModel.email"
-                  placeholder="john@company.com"
-                />
+            <p class="form-intro">
+              Sign in to manage your team's real-time attendance and payroll tracking.
+            </p>
+
+            <form (ngSubmit)="onLogin(loginForm)" #loginForm="ngForm">
+
+              <div class="form-group">
+                <label>WORK EMAIL</label>
+                <div class="input-wrapper">
+                  <span class="input-icon">
+                    <i class="pi pi-envelope"></i>
+                  </span>
+
+                  <input
+                    pInputText
+                    type="email"
+                    name="loginEmail"
+                    [(ngModel)]="loginModel.email"
+                    placeholder="john@company.com"
+                  />
+                </div>
               </div>
-            </div>
 
-            <div class="form-group">
-              <label>PASSWORD</label>
-              <div class="input-wrapper">
-                <span class="input-icon"><i class="pi pi-lock"></i></span>
-                <p-password
-                  [(ngModel)]="loginModel.password"
-                  name="loginPassword"
-                  [toggleMask]="true"
-                  [feedback]="false"
-                  placeholder="••••••••"
-                ></p-password>
+              <div class="form-group">
+                <label>PASSWORD</label>
+                <div class="input-wrapper password-wrapper">
+                  <span class="input-icon">
+                    <i class="pi pi-lock"></i>
+                  </span>
+
+                  <p-password
+                    [(ngModel)]="loginModel.password"
+                    name="loginPassword"
+                    [toggleMask]="true"
+                    [feedback]="false"
+                    placeholder="••••••••"
+                    styleClass="full-width-password"
+                  ></p-password>
+                </div>
               </div>
-            </div>
 
-            <button
-              pButton
-              type="submit"
-              icon="pi pi-sign-in"
-              label="Login"
-              class="btn-submit"
-            ></button>
+              <div class="form-actions">
+                <button
+                  pButton
+                  type="submit"
+                  icon="pi pi-sign-in"
+                  label="Login"
+                  class="btn-submit"
+                ></button>
+              </div>
 
-          </form>
+              <div class="divider">
+                <span>OR CONTINUE WITH</span>
+              </div>
 
-          <p class="login-redirect">
-            Don't have an account? <a href="#" (click)="toggleForm($event)">Register here</a>
-          </p>
+              <div class="google-wrapper">
+                <div class="google-fixed">
+                  <asl-google-signin-button
+                    type="standard"
+                    size="large"
+                    theme="outline"
+                    text="continue_with"
+                    shape="rectangular"
+                    logo_alignment="left"
+                    [width]="300"
+                  >
+                  </asl-google-signin-button>
+                </div>
+              </div>
+
+            </form>
+
+            <p class="login-redirect">
+              Don't have an account?
+              <a href="#" (click)="toggleForm($event)">
+                Register here
+              </a>
+            </p>
+
+          </div>
         </div>
 
       </div>
@@ -170,8 +270,10 @@
   <footer class="footer">
     <div class="footer-left">
       <strong>PayTrack</strong>
+
       <p>
-        © 2026 PayTrack. Attendance and salary computation system with real-time tracking.
+        © 2026 PayTrack. Attendance and salary computation system
+        with real-time tracking.
       </p>
     </div>
 
@@ -183,4 +285,3 @@
     </div>
   </footer>
 </div>
-

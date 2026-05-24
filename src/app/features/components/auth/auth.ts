@@ -11,8 +11,9 @@ import { MessageService } from 'primeng/api';
 import { AuthResponse } from '../../models/auth-response';
 import { LoginModel } from '../../models/users/user-login-model';
 import { Router } from '@angular/router';
-import { SocialAuthService, GoogleLoginProvider, SocialUser } from '@abacritt/angularx-social-login';
-
+import { SocialAuthService, GoogleLoginProvider, SocialUser, GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
+import { OnInit } from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-auth',
   standalone: true,
@@ -22,17 +23,37 @@ import { SocialAuthService, GoogleLoginProvider, SocialUser } from '@abacritt/an
     InputTextModule,
     PasswordModule,
     ButtonModule,
-    FormsModule
+    FormsModule,
+    GoogleSigninButtonModule
   ],
   templateUrl: './auth.html',
   styleUrls: ['./auth.scss'],
 })
 
 
-export class Auth {
+export class Auth implements OnInit{
 
+  ngOnInit(): void {
+  this.socialAuthService.authState.subscribe({
+    next: (user: SocialUser) => {
+
+      if (!user) return;
+
+      this.isGoogleUser = true;
+
+      this.model.fullName = user.name;
+      this.model.email = user.email;
+      this.model.profilePicture = user.photoUrl;
+
+      this.model.password = '';
+
+      this.cdr.detectChanges();
+    }
+  });
+}
   isFlipped: boolean = false;
-
+  isGoogleUser = false;
+  
   model = {
     fullName: '',
     companyName: '',
@@ -51,7 +72,8 @@ export class Auth {
     private authService: AuthService,
     private messageService: MessageService,
     private router: Router,
-    private socialAuthService: SocialAuthService
+    private socialAuthService: SocialAuthService,
+    private cdr: ChangeDetectorRef 
   ) {}
 
  toggleForm(event:Event){
@@ -61,13 +83,17 @@ export class Auth {
 
   //REGISTER
 onRegister(registerForm: NgForm) {
-  if (registerForm.invalid) {
+ if (!this.isGoogleUser && registerForm.invalid) {
     this.messageService.add({
       severity: 'warn',
       summary: 'Validation',
       detail: 'All fields are required'
     });
     return;
+  }
+
+  if (this.isGoogleUser) {
+    this.model.password = ''; // ensure clean payload
   }
 
   this.authService.register(this.model).subscribe({
