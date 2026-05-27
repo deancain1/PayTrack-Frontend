@@ -1,0 +1,138 @@
+<div class="directory-container">
+  <header class="directory-header">
+    <div class="header-title">
+      <h1>Employee Directory</h1>
+      <p>Manage your enterprise workforce and compensation structures.</p>
+    </div>
+    <button class="btn btn-primary">
+      <span class="icon-add">+</span> Add New Employee
+    </button>
+  </header>
+
+  <section class="filters-card">
+    <div class="filter-group search-bar">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="Search by name, ID, or email..." />
+    </div>
+
+    <div class="filter-group dropdown">
+      <select>
+        <option>All Departments</option>
+      </select>
+    </div>
+
+    <div class="filter-group dropdown">
+      <select>
+        <option>Status: All</option>
+      </select>
+    </div>
+
+    <button class="btn btn-outline">
+      <span class="filter-icon">⏳</span> More Filters
+    </button>
+
+    <button class="btn btn-link">Clear All</button>
+  </section>
+
+  <main class="table-container">
+    <table class="directory-table">
+      <thead>
+        <tr>
+          <th>Employee Name</th>
+          <th>Employee ID</th>
+          <th>Department</th>
+          <th>Role</th>
+          <th>Status</th>
+          <th>Last Scan</th>
+          <th class="text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="employee-profile">
+              <img src="https://via.placeholder.com/40" alt="Alexander Wright" class="avatar" />
+              <div class="info">
+                <span class="name">Alexander Wright</span>
+                <span class="email">a.wright@paytrack.io</span>
+              </div>
+            </div>
+          </td>
+          <td><span class="text-muted">PT-94021</span></td>
+          <td>Engineering</td>
+          <td>Senior Architect</td>
+          <td><span class="badge badge-active">Active</span></td>
+          <td><span class="text-muted">Oct 24, 2024</span></td>
+          <td class="text-right"><button class="btn-action">•••</button></td>
+        </tr>
+
+        <tr>
+          <td>
+            <div class="employee-profile">
+              <img src="https://via.placeholder.com/40" alt="Elena Rodriguez" class="avatar" />
+              <div class="info">
+                <span class="name">Elena Rodriguez</span>
+                <span class="email">e.rodriguez@paytrack.io</span>
+              </div>
+            </div>
+          </td>
+          <td><span class="text-muted">PT-88104</span></td>
+          <td>Finance</td>
+          <td>Comptroller</td>
+          <td><span class="badge badge-on-leave">On Leave</span></td>
+          <td><span class="text-muted">Oct 21, 2024</span></td>
+          <td class="text-right"><button class="btn-action">•••</button></td>
+        </tr>
+
+        <tr>
+          <td>
+            <div class="employee-profile">
+              <img src="https://via.placeholder.com/40" alt="Marcus Chen" class="avatar" />
+              <div class="info">
+                <span class="name">Marcus Chen</span>
+                <span class="email">m.chen@paytrack.io</span>
+              </div>
+            </div>
+          </td>
+          <td><span class="text-muted">PT-77293</span></td>
+          <td>Operations</td>
+          <td>Site Manager</td>
+          <td><span class="badge badge-active">Active</span></td>
+          <td><span class="text-muted">Oct 25, 2024</span></td>
+          <td class="text-right"><button class="btn-action">•••</button></td>
+        </tr>
+
+        <tr>
+          <td>
+            <div class="employee-profile">
+              <div class="avatar avatar-initials">SJ</div>
+              <div class="info">
+                <span class="name">Sarah Jenkins</span>
+                <span class="email">s.jenkins@paytrack.io</span>
+              </div>
+            </div>
+          </td>
+          <td><span class="text-muted">PT-55122</span></td>
+          <td>Marketing</td>
+          <td>Lead Strategist</td>
+          <td><span class="badge badge-terminated">Terminated</span></td>
+          <td><span class="text-muted">Sept 12, 2024</span></td>
+          <td class="text-right"><button class="btn-action">•••</button></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <footer class="table-footer">
+      <div class="entry-count">
+        Showing <span>1</span> to <span>4</span> of <span>124</span> entries
+      </div>
+      <nav class="pagination">
+        <button class="page-arrow" disabled>&lt;</button>
+        <button class="page-num active">1</button>
+        <button class="page-num">2</button>
+        <button class="page-num">3</button>
+        <button class="page-arrow">&gt;</button>
+      </nav>
+    </footer>
+  </main>
+</div>
