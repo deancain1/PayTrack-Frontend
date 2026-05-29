@@ -1,0 +1,145 @@
+<div class="directory-container">
+  <header class="directory-header">
+    <div class="header-title">
+      <h1>Departments</h1>
+      <p>
+        Organize and manage departments, assign employees efficiently,
+        and maintain a structured workforce across your business.
+      </p>
+    </div>
+  </header>
+
+  <!-- CREATE DEPARTMENT FORM -->
+  <section class="filters-card">
+    <div class="department-form">
+
+      <!-- Department Name -->
+      <div class="filter-group">
+        <input
+          type="text"
+          placeholder="Department Name"
+          [(ngModel)]="departmentName"
+        />
+      </div>
+
+      <!-- Department Description -->
+      <div class="filter-group">
+        <input
+          type="text"
+          placeholder="Department Description"
+          [(ngModel)]="departmentDescription"
+        />
+      </div>
+
+      <!-- Add Button -->
+      <button
+        class="btn btn-primary"
+        (click)="addDepartment()"
+      >
+        <span class="icon-add">+</span>
+        Add Department
+      </button>
+
+    </div>
+  </section>
+
+  DEPARTMENTS TABLE
+  <main class="table-container">
+    <p-table
+      [value]="(departments$ | async) ?? []"
+      [tableStyle]="{ 'min-width': '100%' }"
+      responsiveLayout="scroll"
+      styleClass="directory-table"
+    >
+
+    
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Department Name</th>
+          <th>Description</th>
+          <th class="text-right">Actions</th>
+        </tr>
+      </ng-template>
+
+     
+      <ng-template pTemplate="body" let-department>
+        <tr>
+
+         
+          <td>
+            <div class="employee-profile">
+              <div class="info">
+                <span class="name">
+                  {{ department.departmentName }}
+                </span>
+              </div>
+            </div>
+          </td>
+
+         
+          <td>
+            {{ department.description || 'N/A' }}
+          </td>
+
+         
+          <td class="text-right">
+            <button class="btn-action">
+              •••
+            </button>
+          </td>
+
+        </tr>
+      </ng-template>
+
+     
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="3" class="empty-state">
+            No departments found.
+          </td>
+        </tr>
+      </ng-template>
+
+    </p-table>
+
+   
+    <footer class="table-footer">
+      <div class="entry-count">
+        Page <span>{{ pageNumber }}</span>
+        —
+        Showing <span>{{ (departments$ | async)?.length }}</span> entries
+      </div>
+
+      <nav class="pagination">
+
+        <button
+          class="page-arrow"
+          [disabled]="pageNumber === 1"
+          (click)="loadPage({
+            first: (pageNumber - 2) * pageSize,
+            rows: pageSize
+          })"
+        >
+        
+        </button>
+
+       
+        <button class="page-num active">
+          {{ pageNumber }}
+        </button>
+
+       
+        <button
+          class="page-arrow"
+          (click)="loadPage({
+            first: pageNumber * pageSize,
+            rows: pageSize
+          })"
+        >
+         
+        </button>
+
+      </nav>
+    </footer>
+  </main>
+</div>
