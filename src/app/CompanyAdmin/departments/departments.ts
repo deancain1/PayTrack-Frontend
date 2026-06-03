@@ -15,7 +15,7 @@ export class Departments implements OnInit {
   departments$ = new BehaviorSubject<DepartmentModel[]>([]);
 
   pageNumber = 1;
-  pageSize = 10;
+  pageSize = 5;
   pageSizeOptions = [5, 7, 10, 20]; 
   searchTerm = '';
 

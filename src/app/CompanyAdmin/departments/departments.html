@@ -1,7 +1,7 @@
 <div class="directory-container">
   <header class="directory-header">
     <div class="header-title">
-      <h1>Departments</h1>
+      <h1><i class="pi pi-sitemap header-icon"></i> Departments</h1>
       <p>
         Organize and manage departments, assign employees efficiently,
         and maintain a structured workforce across your business.
@@ -9,21 +9,18 @@
     </div>
   </header>
 
-  <!-- CREATE DEPARTMENT FORM -->
-  <section class="filters-card">
+  <section class="form-card">
     <div class="department-form">
-
-      <!-- Department Name -->
-      <div class="filter-group">
+      <div class="form-group icon-input">
+        <i class="pi pi-tag input-icon"></i>
         <input
           type="text"
           placeholder="Department Name"
           [(ngModel)]="departmentName"
         />
       </div>
-
-      <!-- Department Description -->
-      <div class="filter-group">
+      <div class="form-group icon-input">
+        <i class="pi pi-align-left input-icon"></i>
         <input
           type="text"
           placeholder="Department Description"
@@ -31,19 +28,13 @@
         />
       </div>
 
-      <!-- Add Button -->
-      <button
-        class="btn btn-primary"
-        (click)="addDepartment()"
-      >
-        <span class="icon-add">+</span>
+      <button class="btn btn-primary" (click)="addDepartment()">
+        <i class="pi pi-plus"></i>
         Add Department
       </button>
-
     </div>
   </section>
 
-  DEPARTMENTS TABLE
   <main class="table-container">
     <p-table
       [value]="(departments$ | async) ?? []"
@@ -51,67 +42,64 @@
       responsiveLayout="scroll"
       styleClass="directory-table"
     >
-
-    
       <ng-template pTemplate="header">
         <tr>
-          <th>Department Name</th>
-          <th>Description</th>
-          <th class="text-right">Actions</th>
-        </tr>
+          <th><i class="pi pi-building table-th-icon"></i> Department Name</th>
+          <th><i class="pi pi-file-text table-th-icon"></i> Description</th>
+          <th class="actions">Actions</th>
       </ng-template>
 
-     
       <ng-template pTemplate="body" let-department>
         <tr>
-
-         
           <td>
-            <div class="employee-profile">
-              <div class="info">
-                <span class="name">
-                  {{ department.departmentName }}
-                </span>
-              </div>
+            <span class="department-name-badge">
+              <i class="pi pi-briefcase td-icon"></i>
+              {{ department.departmentName }}
+            </span>
+          </td>
+
+          <td>
+            <div class="td-description-wrapper">
+              <i class="pi pi-info-circle td-icon-muted"></i>
+              <span class="description-text">
+                {{ department.description || 'No description provided' }}
+              </span>
             </div>
           </td>
 
-         
-          <td>
-            {{ department.description || 'N/A' }}
-          </td>
-
-         
           <td class="text-right">
-            <button class="btn-action">
-              •••
-            </button>
+            <div class="actions-wrapper">
+              <button class="btn-action btn-edit" title="Edit Department">
+                <i class="pi pi-pencil"></i>
+              </button>
+              <button class="btn-action btn-delete" title="Delete Department">
+                <i class="pi pi-trash"></i>
+              </button>
+            </div>
           </td>
-
         </tr>
       </ng-template>
 
-     
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="3" class="empty-state">
-            No departments found.
+          <td colspan="3" class="empty-state-container">
+            <div class="empty-state">
+              <i class="pi pi-folder-open empty-icon"></i>
+              <p>No departments found.</p>
+            </div>
           </td>
         </tr>
       </ng-template>
-
     </p-table>
 
-   
     <footer class="table-footer">
       <div class="entry-count">
         Page <span>{{ pageNumber }}</span>
         —
-        Showing <span>{{ (departments$ | async)?.length }}</span> entries
+        Showing <span>{{ (departments$ | async)?.length ?? 0 }}</span> entries
       </div>
 
       <nav class="pagination">
-
         <button
           class="page-arrow"
           [disabled]="pageNumber === 1"
@@ -120,15 +108,13 @@
             rows: pageSize
           })"
         >
-        
+          <i class="pi pi-chevron-left"></i>
         </button>
 
-       
         <button class="page-num active">
           {{ pageNumber }}
         </button>
 
-       
         <button
           class="page-arrow"
           (click)="loadPage({
@@ -136,9 +122,8 @@
             rows: pageSize
           })"
         >
-         
+          <i class="pi pi-chevron-right"></i>
         </button>
-
       </nav>
     </footer>
   </main>

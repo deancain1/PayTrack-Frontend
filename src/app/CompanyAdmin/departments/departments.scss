@@ -1,19 +1,10 @@
 ::ng-deep .directory-container {
-  // Color Variables
   $color-bg: #f8fafc;
   $color-surface: #ffffff;
   $color-text-main: #0f172a;
   $color-text-muted: #64748b;
   $color-brand: #0f1e36;
   $color-border: #e2e8f0;
-
-  // Status Badge Colors
-  $bg-active: #e0f2fe;
-  $text-active: #0369a1;
-  $bg-leave: #fee2e2;
-  $text-leave: #dc2626;
-  $bg-terminated: #fde8e8;
-  $text-terminated: #e11d48;
 
   background-color: $color-bg;
   padding: 2rem;
@@ -29,10 +20,18 @@
 
     .header-title {
       h1 {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
         font-size: 1.5rem;
         font-weight: 700;
         margin: 0 0 0.25rem 0;
         color: $color-brand;
+
+        .header-icon {
+          font-size: 1.35rem;
+          color: $color-text-muted;
+        }
       }
 
       p {
@@ -43,43 +42,53 @@
     }
   }
 
-  // Filters Card
-  .filters-card {
+  // Form Card
+  .form-card {
     background: $color-surface;
     border: 1px solid $color-border;
     border-radius: 8px;
-    padding: 1rem;
-    display: flex;
-    gap: 1rem;
-    align-items: center;
+    padding: 1.25rem;
     margin-bottom: 1.5rem;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 
-    .filter-group {
-      position: relative;
+    .department-form {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
 
-      &.search-bar {
-        flex-grow: 1;
-        max-width: 320px;
+      .form-group {
+        flex: 1;
+        min-width: 250px;
+        position: relative;
 
-        .search-icon {
-          position: absolute;
-          left: 0.75rem;
-          top: 50%;
-          transform: translateY(-50%);
-          color: $color-text-muted;
-          font-size: 0.875rem;
+        &.icon-input {
+          .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: $color-text-muted;
+            font-size: 0.9rem;
+            pointer-events: none;
+          }
+
+          input {
+            padding-left: 2.5rem;
+          }
         }
 
         input {
           background-color: #ffffff;
           color: $color-text-main;
           width: 100%;
-          padding: 0.5rem 0.75rem 0.5rem 2.2rem;
+          padding: 0.75rem 1rem;
           border: 1px solid $color-border;
           border-radius: 6px;
           font-size: 0.875rem;
           outline: none;
+          transition: all 0.2s ease;
 
           &:focus {
             border-color: $color-brand;
@@ -87,28 +96,33 @@
           }
         }
       }
+    }
+  }
 
-      &.dropdown select {
-        padding: 1rem 2rem 1rem 0.75rem;
-        border: 1px solid $color-border;
-        border-radius: 6px;
-        background-color: $color-surface;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 0.875rem;
-        color: $color-text-main;
-        cursor: pointer;
-        appearance: none;
-      
-        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  .btn {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+    height: 40px;
 
-        background-repeat: no-repeat;
-        background-position: right 0.75rem center;
-        background-size: 1rem;
+    &-primary {
+      background-color: $color-brand;
+      color: white;
+
+      &:hover {
+        opacity: 0.90;
       }
     }
   }
 
-  // TABLE
+  // TABLE CONTAINER
   .table-container {
     background: $color-surface;
     border: 1px solid $color-border;
@@ -123,19 +137,24 @@
       font-size: 0.875rem;
 
       thead {
-        background-color: #f1f5f9;
-
         tr {
           th {
-            padding: 0.875rem 1.5rem;
+            padding: 1.5rem 1.5rem;
             font-weight: 600;
-            background-color: #d4e4fc;
+            background-color: #f8fafc;
             color: $color-text-main;
             text-transform: uppercase;
             font-size: 0.75rem;
             letter-spacing: 0.05em;
             border-bottom: 1px solid $color-border;
             white-space: nowrap;
+
+            .table-th-icon {
+              margin-right: 0.35rem;
+              font-size: 0.8rem;
+              color: $color-text-muted;
+              vertical-align: -1px;
+            }
           }
         }
       }
@@ -150,140 +169,116 @@
           }
 
           td {
-            background-color: $color-bg;
             padding: 1rem 1.5rem;
             vertical-align: middle;
             color: $color-text-main;
+            background-color: $color-bg; 
+          }
+
+         
+
+          // Modern Badges
+          .department-name-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: rgba(99, 102, 241, 0.12);
+            color: #4f46e5;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 0.825rem;
+
+            .td-icon {
+              font-size: 0.85rem;
+              color: #6366f1;
+            }
+          }
+
+          .td-description-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+
+            .td-icon-muted {
+              font-size: 0.95rem;
+              color: #94a3b8;
+              flex-shrink: 0;
+            }
+
+            .description-text {
+              color: $color-text-muted;
+              font-size: 0.875rem;
+            }
+          }
+
+          // Actions Alignment Wrapper
+          .actions-wrapper {
+            display: inline-flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 0.35rem;
           }
         }
       }
     }
   }
 
-  // Employee Profile
-  .employee-profile {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-
-    .avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      object-fit: cover;
-
-      &.avatar-initials {
-        background-color: #1e293b;
-        color: #ffffff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 600;
-        font-size: 0.875rem;
-      }
-    }
-
-    .info {
-      display: flex;
-      flex-direction: column;
-
-      .name {
-        font-weight: 600;
-        color: $color-text-main;
-      }
-
-      .email {
-        font-size: 0.75rem;
-        color: $color-text-muted;
-      }
-    }
-  }
-
-
-
-  // Buttons
-  .btn {
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    border-radius: 6px;
-    cursor: pointer;
-    border: 1px solid transparent;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    transition: all 0.2s ease;
-
-    &-primary {
-      background-color: $color-brand;
-      color: white;
-
-      &:hover {
-        opacity: 0.95;
-      }
-    }
-
-    &-outline {
-      background-color: $color-surface;
-      border-color: $color-border;
-      color: $color-text-main;
-
-      &:hover {
-        background-color: #f1f5f9;
-      }
-    }
-
-    &-link {
-      background: none;
-      color: $color-text-muted;
-      text-decoration: underline;
-
-      &:hover {
-        color: $color-text-main;
-      }
-    }
-  }
-
+  // Refined Action Buttons
   .btn-action {
     background: none;
     border: none;
-    color: $color-text-muted;
     cursor: pointer;
-    font-size: 1.25rem;
-    padding: 0.25rem;
+    font-size: 0.9rem;
+    padding: 0.5rem;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
 
-    &:hover {
-      color: $color-text-main;
+    &.btn-edit {
+      color: #4f46e5; // Indigo accent for edit
+
+      &:hover {
+        background-color: rgba(81, 91, 237, 0.1);
+      }
+    }
+
+    &.btn-delete {
+      color: #e11d48; // Subtle warning red for delete
+
+      &:hover {
+        background-color: rgba(225, 29, 72, 0.1);
+      }
     }
   }
 
-  // Badges
-  .badge {
-    display: inline-block;
-    padding: 0.25rem 0.75rem;
-    border-radius: 9999px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.025em;
+  // Empty State Style
+  .empty-state-container {
+    padding: 4rem 2rem !important;
+    text-align: center;
 
-    &-active {
-      background-color: $bg-active;
-      color: $text-active;
-    }
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      color: $color-text-muted;
 
-    &-on-leave {
-      background-color: $bg-leave;
-      color: $text-leave;
-    }
+      .empty-icon {
+        font-size: 2.5rem;
+        color: #cbd5e1;
+      }
 
-    &-terminated {
-      background-color: $bg-terminated;
-      color: $text-terminated;
+      p {
+        margin: 0;
+        font-size: 0.95rem;
+      }
     }
   }
 
-  // Footer
+  // Footer & Pagination
   .table-footer {
     display: flex;
     justify-content: space-between;
@@ -291,6 +286,7 @@
     padding: 1rem 1.5rem;
     font-size: 0.875rem;
     color: $color-text-muted;
+    border-top: 1px solid $color-border;
 
     .entry-count span {
       font-weight: 600;
@@ -300,7 +296,7 @@
     .pagination {
       display: flex;
       align-items: center;
-      gap: 0.25rem;
+      gap: 0.35rem;
 
       button {
         background: none;
@@ -312,12 +308,13 @@
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        font-size: 0.875rem;
+        font-size: 0.85rem;
         color: $color-text-muted;
+        transition: all 0.2s ease;
 
         &:disabled {
           cursor: not-allowed;
-          opacity: 0.4;
+          opacity: 0.3;
         }
 
         &.page-num {
@@ -339,6 +336,7 @@
 
           &:hover:not(:disabled) {
             background-color: #f1f5f9;
+            color: $color-text-main;
           }
         }
       }
