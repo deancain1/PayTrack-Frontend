@@ -1,0 +1,135 @@
+<p-dialog
+  header="Add Employee"
+  [(visible)]="displayAddEmployeeVisible"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: '90%', 'max-width': '750px' }"
+  (onHide)="close()"
+  styleClass="add-employee-dialog">
+
+  <form #employeeForm="ngForm" (ngSubmit)="createEmployee(employeeForm)">
+
+    <div class="form-container">
+      
+      <div class="fields-column">
+        <div class="form-group">
+          <p-float-label>
+            <input
+              pInputText
+              id="fullName"
+              name="fullName"
+              ngModel
+              required
+            />
+            <label for="fullName">Full Name</label>
+          </p-float-label>
+        </div>
+
+        <div class="form-group">
+          <p-float-label>
+            <input
+              pInputText
+              id="email"
+              type="email"
+              name="email"
+              ngModel
+              required
+            />
+            <label for="email">Email</label>
+          </p-float-label>
+        </div>
+
+         <div class="form-group">
+          <p-float-label>
+            <input
+              pInputText
+              id="phoneNumber"
+              name="phoneNumber"
+              ngModel
+              required
+            />
+            <label for="department">Phone Number</label>
+          </p-float-label>
+        </div>
+
+        <div class="form-group">
+         <p-float-label>
+        <select
+      id="department"
+      name="departmentId"
+      [(ngModel)]="selectedDepartmentId"
+      required>
+      
+      <option value="" disabled selected>Select Department</option>
+
+      <option
+        *ngFor="let department of departments"
+        [value]="department.id">
+        {{ department.departmentName }}
+      </option>
+
+    </select>
+
+   
+  </p-float-label>
+</div>
+
+        <div class="form-group">
+          <p-float-label>
+            <input
+              pInputText
+              id="password"
+              type="password"
+              name="password"
+              ngModel
+              required
+              minlength="6"
+            />
+            <label for="password">Password</label>
+          </p-float-label>
+        </div>
+      </div>
+
+      <div class="form-group profile-upload">
+        <label for="profileImage">Profile Image</label>
+
+        <div class="image-preview-container">
+          <img *ngIf="profilePreview" [src]="profilePreview" alt="Profile Preview" class="profile-preview" />
+          <span *ngIf="!profilePreview" class="placeholder-icon">
+            <i class="pi pi-user"></i>
+          </span>
+        </div>
+
+        <button
+          type="button"
+          pButton
+          label="Browse"
+          (click)="fileInput.click()"
+          class="browse-btn"
+        ></button>
+
+        <input
+          type="file"
+          id="profileImage"
+          #fileInput
+          (change)="onProfileImageChange($event)"
+          accept="image/*"
+          hidden
+        />
+      </div>
+
+    </div>
+
+    <div class="form-actions">
+      <button
+        pButton
+        type="submit"
+        label="Add Employee"
+        class="create-btn"
+        [disabled]="isSubmitting"
+      ></button>
+    </div>
+
+  </form>
+</p-dialog>

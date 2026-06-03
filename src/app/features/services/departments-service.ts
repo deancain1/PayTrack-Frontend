@@ -21,4 +21,9 @@ export class DepartmentsService {
     if (search) query += `&search=${search}`;
     return this.api.get<PagedResult<DepartmentModel>>(query);
   }
+  getMyDepartments() {
+  return this.api.get<DepartmentModel[]>(
+    `api/Departments/my-departments`
+  );
+}
 }
