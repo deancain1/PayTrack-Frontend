@@ -1,0 +1,153 @@
+.scanner-container {
+  padding: 20px;
+  background: #f5f7fb;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+/* HEADER */
+.page-header {
+  margin-bottom: 20px;
+
+  h2 {
+    margin: 0;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  p {
+    margin: 5px 0 0;
+    color: #666;
+    font-size: 13px;
+  }
+}
+
+/* GRID LAYOUT */
+.scanner-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+/* CARD BASE */
+.card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  overflow: hidden;
+}
+
+/* CARD HEADER */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-bottom: 1px solid #eee;
+
+  h3 {
+    margin: 0;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+/* STEP BADGE */
+.step-badge {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #2d6cdf;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+/* BODY */
+.card-body {
+  padding: 15px;
+}
+
+/* QR SCANNER */
+.reader {
+  width: 100%;
+  min-height: 320px;
+}
+
+.scanner-overlay-text {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #777;
+}
+
+/* SELFIE */
+.photo-container {
+  position: relative;
+  width: 100%;
+  height: 350px;
+}
+
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1);
+  border-radius: 8px;
+}
+
+/* PLACEHOLDER */
+.selfie-placeholder {
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  color: #aaa;
+  font-weight: bold;
+  background: #fafafa;
+  border-radius: 8px;
+
+  i {
+    font-size: 20px;
+  }
+}
+
+/* COUNTDOWN OVERLAY */
+.countdown-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,.45);
+  color: white;
+  text-align: center;
+}
+
+.countdown-number {
+  font-size: 80px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.countdown-text {
+  font-size: 14px;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* RIGHT COLUMN */
+.right-column {
+  display: flex;
+  flex-direction: column;
+}
