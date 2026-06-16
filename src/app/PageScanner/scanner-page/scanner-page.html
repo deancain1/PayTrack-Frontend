@@ -1,6 +1,5 @@
 <div class="scanner-container">
 
-  
   <div class="page-header">
     <h2>
     <i class="pi pi-qrcode"></i>
@@ -19,11 +18,15 @@
     <div class="card scanner-card">
 
       <div class="card-header">
-        <span class="step-badge">1</span>
         <h3>
+            <span class="step-badge">1</span>
           <i class="pi pi-qrcode"></i>
           Scan Identity QR
         </h3>
+          <span class="info">
+             <i class="pi pi-info-circle"></i>
+          Center the QR code within the viewfinder corners.
+          </span>
       </div>
 
       <div class="card-body qr-body">
@@ -34,9 +37,7 @@
           [hidden]="showPhotoCamera">
         </div>
 
-        <div class="scanner-overlay-text" *ngIf="!showPhotoCamera">
-          Center the QR code within the viewfinder corners.
-        </div>
+       
 
       </div>
 
@@ -49,11 +50,15 @@
       <div class="card selfie-card">
 
         <div class="card-header">
-          <span class="step-badge">2</span>
           <h3>
+            <span class="step-badge">2</span>
             <i class="pi pi-user"></i>
             Biometric Snapshot
           </h3>
+           <span class="reminder">
+             <i class="pi pi-exclamation-triangle"></i>
+             Capture a clear photo for identity verification.
+          </span>
         </div>
 
         <div class="card-body selfie-body">
@@ -76,8 +81,9 @@
           </div>
 
           <div class="selfie-placeholder" *ngIf="!showPhotoCamera">
-            <i class="pi pi-check-circle"></i>
-            READY TO CAPTURE
+            <i class="pi pi-camera"></i>
+           <p> Please take a picture after QR scanning</p>
+           
           </div>
 
         </div>
