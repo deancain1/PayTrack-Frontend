@@ -9,13 +9,21 @@ export class EmployeesService {
   
   constructor(private api: ApiService){}
 
-//  getEmployees(pageNumber: number, pageSize: number, search: string = '') {
-//     const endpoint =
-//       `api/Employees/employees?pageNumber=${pageNumber}&pageSize=${pageSize}&search=${search}`;
+getEmployees(
+  pageNumber: number,
+  pageSize: number,
+  search?: string
+) {
+  return this.api.get<PagedResult<Employee>>(
+    `api/Employees?pageNumber=${pageNumber}&pageSize=${pageSize}&search=${search ?? ''}`
+  );
+}
 
-//     return this.api.get<PagedResult<Employee>>(endpoint);
-//   }
-
+getEmployeesLookup() {
+  return this.api.get<Employee[]>(
+    'api/Employees/lookup'
+  );
+}
   generateQr(employeeId: string) {
   return this.api.post<any>(
     `api/Employees/${employeeId}/generate-qr`,

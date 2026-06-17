@@ -1,0 +1,209 @@
+
+
+/* COLORS */
+$bg-app: #f4f6f9;
+$bg-panel: #ffffff;
+$text-primary: #1e293b;
+$text-muted: #64748b;
+$brand-dark: #0f172a;
+$brand-blue: #032b53;
+$border-color: #e2e8f0;
+
+/* GLOBAL TABLE ALIGNMENTS & UTILITIES */
+.text-right { text-align: right !important; }
+.text-center { text-align: center !important; }
+.font-semibold { font-weight: 600; }
+
+/* LAYOUT CONTAINER */
+.directory-container {
+  background: $bg-app;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+/* HEADER */
+.directory-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: $text-primary;
+    margin: 0;
+  }
+
+  .p-button-secondary {
+    background: $brand-dark;
+    border: none;
+
+    &:hover {
+      background: ($brand-dark);
+    }
+  }
+}
+
+/* MAIN LAYOUT SPLIT */
+.salary-layout {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 24px;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* LEFT FORM PANEL */
+.salary-form-panel {
+  background: $bg-panel;
+  padding: 20px;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  height: fit-content;
+
+  .panel-header {
+    margin-bottom: 20px;
+
+    h3 {
+      margin: 0 0 4px 0;
+      color: $brand-blue;
+      font-weight: 700;
+    }
+
+    .panel-subtitle {
+      margin: 0;
+      font-size: 12px;
+      color: $text-muted;
+    }
+  }
+
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+
+    label {
+      font-size: 11px;
+      font-weight: 600;
+      color: $text-muted;
+      margin-bottom: 6px;
+    }
+
+    input,
+    select {
+      padding: 10px;
+      border: 1px solid $border-color;
+      border-radius: 6px;
+      outline: none;
+      background-color: #fff;
+      color: $text-primary;
+      font-family: inherit;
+
+      &:focus {
+        border-color: ($border-color);
+      }
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+
+    .btn-save {
+      background: $brand-blue;
+      border: none;
+      flex: 2;
+
+      &:hover {
+        background: ($brand-blue);
+      }
+    }
+
+    .btn-clear {
+      color: $text-muted;
+      flex: 1;
+
+      &:hover {
+        color: $text-primary;
+      }
+    }
+  }
+}
+
+/* RIGHT TABLE PANEL */
+.salary-table-panel {
+  background: $bg-panel;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* PRIME NG DATA TABLE OVERRIDES */
+.directory-table {
+  ::ng-deep .p-datatable-thead > tr > th {
+    background: #f8fafc;
+    color: $text-muted;
+    font-size: 12px;
+    padding: 14px;
+    border-bottom: 1px solid $border-color;
+  }
+
+  ::ng-deep .p-datatable-tbody > tr {
+    border-bottom: 1px solid $border-color;
+
+
+    td {
+      padding: 14px;
+     background: #f8fafc;
+    }
+  }
+}
+
+/* EMPLOYEE IDENTIFIER DETAILS */
+.employee-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #e2e8f0;
+    color: #475569;
+    font-weight: 600;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .name {
+    font-weight: 600;
+    color: $brand-blue;
+  }
+}
+
+/* EMPTY TABLE STYLING */
+.table-empty-state {
+  padding: 32px !important;
+  color: $text-muted;
+}
