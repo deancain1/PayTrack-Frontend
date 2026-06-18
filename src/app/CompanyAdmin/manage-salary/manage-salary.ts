@@ -11,7 +11,7 @@ import { EmployeesService } from '../../features/services/employees-service';
 import { Employee } from '../../features/models/employees/employees-model';
 
 import { MessageService } from 'primeng/api';
-
+import { SalarySummaryModel } from '../../features/models/salary/salary-summary-model';
 @Component({
   selector: 'app-manage-salary',
   standalone: true,
@@ -23,7 +23,7 @@ export class ManageSalary implements OnInit {
 
   employees$!: Observable<Employee[]>;
   salaries$ = new BehaviorSubject<SalaryModel[]>([]);
-
+  summary?: SalarySummaryModel;
   pageNumber = 1;
   pageSize = 7;
   searchTerm = '';
@@ -54,6 +54,7 @@ export class ManageSalary implements OnInit {
     });
 
     this.employees$ = this.employeeService.getEmployeesLookup();
+    this.loadSummary();
   }
 
   loadPage(event: any): void {
@@ -79,6 +80,18 @@ export class ManageSalary implements OnInit {
         }
       });
   }
+    loadSummary(): void {
+    this.salaryService.getSummary().subscribe({
+      next: (response) => {
+        this.summary = response;
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
+
+
 
   onSearch(event: any): void {
     this.searchTerm = event.target.value;
@@ -95,6 +108,7 @@ export class ManageSalary implements OnInit {
       first: 0,
       rows: this.pageSize
     });
+     this.loadSummary();
   }
 
   getInitials(name: string): string {

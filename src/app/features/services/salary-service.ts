@@ -4,6 +4,7 @@ import { CreateSalaryModel } from '../models/salary/create-salary-model';
 import { SalaryModel } from '../models/salary/salary-model';
 import { PagedResult } from '../models/pagedresult/paged-result';
 import { Observable } from 'rxjs';
+import { SalarySummaryModel } from '../models/salary/salary-summary-model';
 @Injectable({
   providedIn: 'root',
 })
@@ -23,7 +24,6 @@ export class SalaryService {
     );
   }
 
-
   getSalaries(
     pageNumber: number = 1,
     pageSize: number = 7,
@@ -37,6 +37,12 @@ export class SalaryService {
 
     return this.apiService.get<PagedResult<SalaryModel>>(
       endpoint
+    );
+  }
+
+  getSummary(): Observable<SalarySummaryModel> {
+    return this.apiService.get<SalarySummaryModel>(
+      `api/Salary/summary`
     );
   }
 }

@@ -1,27 +1,30 @@
+@use '../../../styles/variables' as *;
 
-
-/* COLORS */
-$bg-app: #f4f6f9;
-$bg-panel: #ffffff;
-$text-primary: #1e293b;
-$text-muted: #64748b;
-$brand-dark: #0f172a;
-$brand-blue: #032b53;
-$border-color: #e2e8f0;
-
-/* GLOBAL TABLE ALIGNMENTS & UTILITIES */
-.text-right { text-align: right !important; }
-.text-center { text-align: center !important; }
-.font-semibold { font-weight: 600; }
-
-/* LAYOUT CONTAINER */
-.directory-container {
-  background: $bg-app;
-  min-height: 100vh;
-  padding: 24px;
+.text-right {
+  text-align: right;
 }
 
-/* HEADER */
+.text-center {
+  text-align: center;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+/* =========================
+   PAGE
+========================= */
+.directory-container {
+  min-height: 100vh;
+  background: $color-bg;
+  padding: 10px;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* =========================
+   HEADER
+========================= */
 .directory-header {
   display: flex;
   justify-content: space-between;
@@ -29,181 +32,380 @@ $border-color: #e2e8f0;
   margin-bottom: 24px;
 
   h1 {
+    margin: 0;
     font-size: 28px;
     font-weight: 700;
-    color: $text-primary;
-    margin: 0;
+    color: $color-text-main;
   }
 
   .p-button-secondary {
-    background: $brand-dark;
+    background: $color-brand;
     border: none;
-
-    &:hover {
-      background: ($brand-dark);
-    }
   }
 }
 
-/* MAIN LAYOUT SPLIT */
+/* =========================
+   MAIN LAYOUT
+========================= */
 .salary-layout {
-  display: grid;
-  grid-template-columns: 360px 1fr;
-  gap: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
 
-  @media (max-width: 1024px) {
+/* =========================
+   FORM PANEL
+========================= */
+.salary-form-panel {
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.panel-header {
+  margin-bottom: 20px;
+
+  h3 {
+    margin: 0 0 4px;
+    color: $color-brand;
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .panel-subtitle {
+    margin: 0;
+    color: $color-text-muted;
+    font-size: 13px;
+  }
+}
+
+.form-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr auto;
+  gap: 5px;
+  align-items: end;
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 768px) {
     grid-template-columns: 1fr;
   }
 }
 
-/* LEFT FORM PANEL */
-.salary-form-panel {
-  background: $bg-panel;
-  padding: 20px;
-  border: 1px solid $border-color;
-  border-radius: 8px;
-  height: fit-content;
+.form-group {
+  display: flex;
+  flex-direction: column;
 
-  .panel-header {
-    margin-bottom: 20px;
-
-    h3 {
-      margin: 0 0 4px 0;
-      color: $brand-blue;
-      font-weight: 700;
-    }
-
-    .panel-subtitle {
-      margin: 0;
-      font-size: 12px;
-      color: $text-muted;
-    }
+  label {
+    margin-bottom: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    color: $color-text-muted;
+    text-transform: uppercase;
   }
 
-  .form-container {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
+  input,
+  select {
+    padding: 12px;
+    border: 1px solid $color-border;
+    border-radius: 8px;
+    background: $color-surface;
+    color: $color-text-main;
+    outline: none;
 
-  .form-group {
-    display: flex;
-    flex-direction: column;
-
-    label {
-      font-size: 11px;
-      font-weight: 600;
-      color: $text-muted;
-      margin-bottom: 6px;
-    }
-
-    input,
-    select {
-      padding: 10px;
-      border: 1px solid $border-color;
-      border-radius: 6px;
-      outline: none;
-      background-color: #fff;
-      color: $text-primary;
-      font-family: inherit;
-
-      &:focus {
-        border-color: ($border-color);
-      }
-    }
-  }
-
-  .form-actions {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 12px;
-    margin-top: 8px;
-
-    .btn-save {
-      background: $brand-blue;
-      border: none;
-      flex: 2;
-
-      &:hover {
-        background: ($brand-blue);
-      }
-    }
-
-    .btn-clear {
-      color: $text-muted;
-      flex: 1;
-
-      &:hover {
-        color: $text-primary;
-      }
+    &:focus {
+      border-color: $color-brand;
     }
   }
 }
 
-/* RIGHT TABLE PANEL */
-.salary-table-panel {
-  background: $bg-panel;
-  border: 1px solid $border-color;
+.form-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  height: 46px;
+
+  .btn-clear {
+    flex: 1;
+  }
+
+  .btn-save {
+    flex: 1;
+    background: $color-brand;
+    color: $color-surface;
+    border: none;
+  }
+}
+
+/* =========================
+   CARDS
+========================= */
+.salary-summary-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 15px;
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.summary-card {
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .05);
+  transition: .2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.card-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  i {
+    font-size: 1.5rem;
+  }
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+
+  .card-title {
+    font-size: .75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: $color-text-muted;
+    letter-spacing: .05em;
+  }
+
+  h2 {
+    margin: 4px 0;
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: $color-text-main;
+  }
+
+  small {
+    color: $color-text-muted;
+  }
+}
+
+.full-day .card-icon {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.half-day .card-icon {
+  background: #ffedd5;
+  color: #ea580c;
+}
+
+.hourly .card-icon {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.prorated .card-icon {
+  background: #f3e8ff;
+  color: #7e22ce;
+}
+
+/* =========================
+   TABLE
+========================= */
+.table-container {
+  background: $color-surface;
+  border: 1px solid $color-border;
   border-radius: 8px;
   overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .05);
 }
 
-/* PRIME NG DATA TABLE OVERRIDES */
 .directory-table {
+
+  ::ng-deep .p-datatable-table {
+    width: 100%;
+  }
+
   ::ng-deep .p-datatable-thead > tr > th {
-    background: #f8fafc;
-    color: $text-muted;
-    font-size: 12px;
-    padding: 14px;
-    border-bottom: 1px solid $border-color;
+    padding: .875rem 1.5rem;
+    background-color: #d4e4fc;
+    color: $color-text-main;
+    text-transform: uppercase;
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .05em;
+    border-bottom: 1px solid $color-border;
+    white-space: nowrap;
   }
 
   ::ng-deep .p-datatable-tbody > tr {
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid $color-border;
+    transition: background-color .2s ease;
 
-
-    td {
-      padding: 14px;
-     background: #f8fafc;
+    &:hover {
+      background-color: $color-bg;
     }
+  }
+
+  ::ng-deep .p-datatable-tbody > tr > td {
+    padding: 1rem 1.5rem;
+    vertical-align: middle;
+    background: $color-bg;
+    color: $color-text-main;
   }
 }
 
-/* EMPLOYEE IDENTIFIER DETAILS */
+/* =========================
+   EMPLOYEE PROFILE
+========================= */
 .employee-profile {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: .75rem;
 
   .avatar {
-    width: 38px;
-    height: 38px;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
     border-radius: 50%;
-    background: #e2e8f0;
-    color: #475569;
-    font-weight: 600;
-    font-size: 13px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     overflow: hidden;
 
-    img {
+    &.avatar-initials {
+      background: $color-text-main;
+      color: $color-surface;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: .875rem;
+    }
+
+    .user-avatar {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      display: block;
     }
   }
 
-  .name {
-    font-weight: 600;
-    color: $brand-blue;
+  .info {
+    display: flex;
+    flex-direction: column;
+
+    .name {
+      font-weight: 600;
+      color: $color-text-main;
+    }
   }
 }
 
-/* EMPTY TABLE STYLING */
-.table-empty-state {
-  padding: 32px !important;
-  color: $text-muted;
+/* =========================
+   POLICY BADGES
+========================= */
+.badge {
+  display: inline-block;
+  padding: .35rem .85rem;
+  border-radius: 999px;
+  font-size: .75rem;
+  font-weight: 600;
+}
+
+.badge-fullday {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.badge-halfday {
+  background: #ffedd5;
+  color: #ea580c;
+}
+
+.badge-hourly {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.badge-prorated {
+  background: #f3e8ff;
+  color: #7e22ce;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px !important;
+  color: $color-text-muted;
+}
+
+/* =========================
+   FOOTER / PAGINATION
+========================= */
+.table-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  font-size: .875rem;
+  color: $color-text-muted;
+
+  .entry-count span {
+    color: $color-text-main;
+    font-weight: 600;
+  }
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: .25rem;
+
+  button {
+    background: none;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    min-width: 32px;
+    height: 32px;
+    cursor: pointer;
+  }
+
+  .page-num.active {
+    background: $color-brand;
+    color: $color-surface;
+    font-weight: 600;
+  }
+
+  .page-arrow {
+    border-color: $color-border;
+    background: $color-surface;
+
+    &:hover:not(:disabled) {
+      background: #f1f5f9;
+    }
+
+    &:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+  }
 }
