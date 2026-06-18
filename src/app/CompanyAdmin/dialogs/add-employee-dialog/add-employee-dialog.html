@@ -57,7 +57,7 @@
          <p-float-label>
         <select
       id="department"
-      name="departmentId"
+      name="department"
       [(ngModel)]="selectedDepartmentId"
       required>
       
@@ -65,7 +65,7 @@
 
       <option
         *ngFor="let department of departments"
-        [value]="department.id">
+        [value]="department.departmentName">
         {{ department.departmentName }}
       </option>
 
