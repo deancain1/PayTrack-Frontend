@@ -1,20 +1,6 @@
+@use '../../../styles/variables' as *;
 ::ng-deep .directory-container {
-  // Color Variables
-  $color-bg: #f8fafc;
-  $color-surface: #ffffff;
-  $color-text-main: #0f172a;
-  $color-text-muted: #64748b;
-  $color-brand: #0f1e36;
-  $color-border: #e2e8f0;
-
-  // Status Badge Colors
-  $bg-active: #e0f2fe;
-  $text-active: #0369a1;
-  $bg-leave: #fee2e2;
-  $text-leave: #dc2626;
-  $bg-terminated: #fde8e8;
-  $text-terminated: #e11d48;
-
+ 
   background-color: $color-bg;
   padding: 2rem;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
