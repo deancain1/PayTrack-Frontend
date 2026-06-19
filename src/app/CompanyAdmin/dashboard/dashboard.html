@@ -1,1 +1,297 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+
+  <!-- ================= HEADER ================= -->
+  <div class="dashboard-header">
+
+    <div>
+      <h2>Dashboard</h2>
+      <p>Welcome back, here's what's happening with payroll today.</p>
+    </div>
+
+    <div class="header-actions">
+
+      <button class="btn btn-light" (click)="openPayrollDialog()">
+        Generate Payroll
+      </button>
+
+      <button class="btn btn-light">
+        Update Payroll
+      </button>
+
+      <button class="btn btn-primary">
+        Add Employee
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- ================= PAYROLL DIALOG ================= -->
+ <p-dialog
+  header="Generate Payroll Report"
+  [(visible)]="showPayrollDialog"
+  [modal]="true"
+  [style]="{ width: '650px' }"
+  [draggable]="false"
+  [resizable]="false"
+  styleClass="generate-payroll-dialog"
+>
+
+  <div class="payroll-modal">
+
+    <!-- ================= PERIOD ================= -->
+    <div class="section">
+      <h4>PAYROLL PERIOD</h4>
+
+      <div class="row">
+        <div class="field">
+          <label>Period Start</label>
+          <input type="date" [(ngModel)]="startDate" class="form-control" />
+        </div>
+
+        <div class="field">
+          <label>Period End</label>
+          <input type="date" [(ngModel)]="endDate" class="form-control" />
+        </div>
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- ================= EMPLOYEES ================= -->
+    <div class="section">
+
+      <h4>SELECT EMPLOYEES</h4>
+
+      <!-- SEARCH (UI only for now) -->
+      <div class="search-box">
+        <input type="text" class="form-control" placeholder="Search..." />
+      </div>
+
+      <!-- ALL TOGGLE -->
+      <div class="all-toggle">
+        <input type="checkbox"
+               [(ngModel)]="selectAllEmployees"
+               (change)="toggleAllEmployees()" />
+        <label>All Employees</label>
+      </div>
+
+      <!-- EMPLOYEE LIST -->
+      <div class="employee-list">
+
+        <div *ngFor="let emp of employeeOptions" class="employee-item">
+
+          <input type="checkbox"
+                 [checked]="isSelected(emp.value)"
+                 (change)="toggleEmployee(emp.value, $event)" />
+
+          <!-- avatar circle -->
+          <div class="avatar">
+            {{ emp.label.substring(0,2).toUpperCase() }}
+          </div>
+
+          <div class="name">
+            {{ emp.label }}
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ================= FOOTER SUMMARY ================= -->
+    <div class="footer-summary">
+
+      <div class="summary-left">
+        <small>SELECTED EMPLOYEES</small>
+        <h3>{{ selectedEmployees.length }} Selected</h3>
+      </div>
+
+      
+
+    </div>
+
+    <!-- ================= ACTIONS ================= -->
+    <div class="actions">
+
+      <button class="btn btn-secondary" (click)="closeDialog()">
+        Cancel
+      </button>
+
+      <button class="btn btn-primary" (click)="generatePayroll()">
+        Generate PDF
+      </button>
+
+    </div>
+
+  </div>
+
+</p-dialog>
+
+  <!-- ================= STATS ================= -->
+  <div class="stats-grid">
+
+    <div class="stat-card blue">
+      <span class="label">Total Employees</span>
+      <h3>125</h3>
+    </div>
+
+    <div class="stat-card green">
+      <span class="label">Present Today</span>
+      <h3>98</h3>
+    </div>
+
+    <div class="stat-card red">
+      <span class="label">Absent Today</span>
+      <h3>12</h3>
+    </div>
+
+    <div class="stat-card yellow">
+      <span class="label">Late Today</span>
+      <h3>15</h3>
+    </div>
+
+    <div class="stat-card gray">
+      <span class="label">This Month Payroll</span>
+      <h3>₱325k</h3>
+    </div>
+
+    <div class="stat-card gray">
+      <span class="label">Pending Payroll</span>
+      <h3>₱45k</h3>
+    </div>
+
+  </div>
+
+  <!-- ================= CHARTS ================= -->
+  <div class="charts-grid">
+
+    <div class="card payroll-chart">
+      <div class="card-header">
+        <h4>Monthly Payroll Expenses</h4>
+      </div>
+
+      <div class="chart-placeholder">
+        Chart Here
+      </div>
+    </div>
+
+    <div class="card attendance-card">
+
+      <div class="card-header">
+        <h4>Attendance Overview</h4>
+      </div>
+
+      <div class="progress-item">
+        <div class="title">
+          <span>Present</span>
+          <span>78%</span>
+        </div>
+        <div class="progress">
+          <div class="progress-fill green-fill" style="width:78%"></div>
+        </div>
+      </div>
+
+      <div class="progress-item">
+        <div class="title">
+          <span>Late</span>
+          <span>12%</span>
+        </div>
+        <div class="progress">
+          <div class="progress-fill yellow-fill" style="width:12%"></div>
+        </div>
+      </div>
+
+      <div class="progress-item">
+        <div class="title">
+          <span>Absent</span>
+          <span>10%</span>
+        </div>
+        <div class="progress">
+          <div class="progress-fill red-fill" style="width:10%"></div>
+        </div>
+      </div>
+
+      <p class="attendance-note">
+        Based on 125 active employees today.
+      </p>
+
+    </div>
+
+  </div>
+
+  <!-- ================= ATTENDANCE TABLE ================= -->
+  <div class="card attendance-table">
+
+  <div class="card-header">
+    <h4>Recent Attendance Logs</h4>
+  </div>
+
+  <p-table
+    [value]="attendanceList"
+    responsiveLayout="scroll"
+    styleClass="directory-table">
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Employee</th>
+        <th>Employee Number</th>
+        <th>Time In</th>
+        <th>Time Out</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td>
+          <div class="employee-profile">
+
+            <div class="avatar avatar-initials">
+              <img
+                *ngIf="item.photoBase64"
+                class="user-avatar"
+                [src]="item.photoBase64"
+                alt="Employee Avatar"
+              />
+
+              <span *ngIf="!item.photoBase64">
+                {{ getInitials(item.fullName) }}
+              </span>
+            </div>
+
+            <div class="info">
+              <span class="name">
+                {{ item.fullName }}
+              </span>
+            </div>
+
+          </div>
+        </td>
+
+        <td>
+          {{ item.employeeNumber }}
+        </td>
+
+        <td>
+          {{ item.timeIn }}
+        </td>
+
+        <td>
+          {{ item.timeOut }}
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="4" class="empty-state">
+          No attendance records found today.
+        </td>
+      </tr>
+    </ng-template>
+
+  </p-table>
+
+</div>
+</div>
