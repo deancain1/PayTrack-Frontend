@@ -119,9 +119,16 @@
   box-shadow: 0 2px 10px rgba(0,0,0,.04);
   border-left: 4px solid #ddd;
 
+  .stat-header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+  }
   .label {
-    font-size: 13px;
+    font-size: 14px;
     color: #64748b;
+    font-weight: 600;
   }
 
   h3 {
@@ -129,8 +136,30 @@
     font-size: 24px;
     color: #1e293b;
   }
+   i {
+    font-size: 1.5rem;
+    opacity: 0.8;
+  }
+}
+.blue i {
+  color: #2563eb;
 }
 
+.green i {
+  color: #16a34a;
+}
+
+.red i {
+  color: #dc2626;
+}
+
+.yellow i {
+  color: #ca8a04;
+}
+
+.gray i {
+  color: #6b7280;
+}
 .blue { border-left-color: #3b82f6; }
 .green { border-left-color: #22c55e; }
 .red { border-left-color: #ef4444; }
@@ -139,7 +168,7 @@
 
 /* ==========================================
    CHARTS
-========================================== */
+===================================== ===== */
 
 .charts-grid {
   display: grid;
@@ -273,6 +302,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  
 }
 
 .employee-profile .info {
@@ -301,17 +331,20 @@
 ::ng-deep .generate-payroll-dialog .p-dialog {
   border-radius: 14px;
   overflow: hidden;
+ 
 }
 
 ::ng-deep .generate-payroll-dialog .p-dialog-header {
   background: white;
   border-bottom: 1px solid #eef2f7;
   padding: 14px 18px;
+   color: $color-text-main;
 }
 
 ::ng-deep .generate-payroll-dialog .p-dialog-content {
   padding: 0;
   background: #f7f9fc;
+  color: $color-text-main;
 }
 
 ::ng-deep .generate-payroll-dialog .payroll-modal {
@@ -356,6 +389,8 @@
   padding: 10px;
   border: 1px solid #e5e7eb;
   border-radius: 8px;
+  background-color: $color-bg;
+  color: $color-text-main;
 }
 
 ::ng-deep .generate-payroll-dialog .employee-list {
@@ -363,6 +398,7 @@
   overflow-y: auto;
   border: 1px solid #eef2f7;
   border-radius: 10px;
+ 
 }
 
 ::ng-deep .generate-payroll-dialog .employee-item {
@@ -371,6 +407,8 @@
   gap: 10px;
   padding: 10px 12px;
   border-bottom: 1px solid #f1f5f9;
+  
+  
 }
 
 ::ng-deep .generate-payroll-dialog .footer-summary {

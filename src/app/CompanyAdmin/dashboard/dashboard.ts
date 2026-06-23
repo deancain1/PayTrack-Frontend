@@ -4,6 +4,9 @@ import { EmployeesService } from '../../features/services/employees-service';
 import { SharedModule } from '../../../shared.module';
 import { AttendanceService } from '../../features/services/attendance-service';
 import { AttendanceModel } from '../../features/models/attendance/attendance-model';
+import { EmployeeStatsModel } from '../../features/models/employees/employee-stats-model';
+import { ChangeDetectorRef } from '@angular/core';
+import { AttendanceStatsModel } from '../../features/models/attendance/attendance-stats-model';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,34 +16,45 @@ import { AttendanceModel } from '../../features/models/attendance/attendance-mod
 })
 export class Dashboard {
 
-  // ================= DIALOG STATE =================
+ 
   showPayrollDialog: boolean = false;
 
-  // ================= DATE RANGE =================
+  //DATE RANGE 
   startDate!: Date;
   endDate!: Date;
 
-  // ================= EMPLOYEE SELECTION =================
+  // EMPLOYEE SELECTION 
   selectedEmployees: string[] = [];
   selectAllEmployees: boolean = false;
 
   employeeOptions: any[] = [];
 
   estimatedTotal: number = 0;
-  attendanceList: AttendanceModel[] = [];
+  employeeStats: EmployeeStatsModel = {
+  totalEmployees: 0};
 
+  attendanceStats: AttendanceStatsModel = {
+  presentToday: 0,
+  absentToday: 0
+};
+
+  attendanceList: AttendanceModel[] = [];
+   
   constructor(
     private payrollService: PayrollService,
     private employeesService: EmployeesService,
-    private attendanceService: AttendanceService
+    private attendanceService: AttendanceService,
+     private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.loadEmployees();
-     this.loadAttendance();
+    this.loadAttendance();
+    this.loadEmployeeStats();
+    this.loadAttendanceStats();
   }
 
-  // ================= OPEN / CLOSE DIALOG =================
+ 
   openPayrollDialog() {
     this.showPayrollDialog = true;
   }
@@ -49,7 +63,32 @@ export class Dashboard {
     this.showPayrollDialog = false;
   }
 
-  // ================= LOAD EMPLOYEES =================
+  loadEmployeeStats(): void {
+  this.employeesService
+    .getEmployeeSummary()
+    .subscribe({
+      next: (res) => {
+        this.employeeStats = res;
+         this.cdr.detectChanges();
+      }
+    });
+}
+
+
+loadAttendanceStats(): void {
+  this.attendanceService
+    .getAttendanceStats()
+    .subscribe({
+      next: (response) => {
+        this.attendanceStats = response;
+         this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+}
+  // LOAD EMPLOYEES 
   loadEmployees() {
     this.employeesService.getEmployeesLookup().subscribe({
       next: (res: any[]) => {
@@ -57,17 +96,17 @@ export class Dashboard {
           label: e.fullName,
           value: e.id
         }));
+         this.cdr.detectChanges();
       },
       error: (err) => console.error(err)
     });
   }
 
-  // ================= CHECK IF SELECTED =================
+  
   isSelected(employeeId: string): boolean {
     return this.selectedEmployees.includes(employeeId);
   }
 
-  // ================= TOGGLE SINGLE EMPLOYEE =================
   toggleEmployee(employeeId: string, event: any) {
 
     if (event.target.checked) {
@@ -84,7 +123,7 @@ export class Dashboard {
     
   }
 
-  // ================= TOGGLE ALL EMPLOYEES =================
+
   toggleAllEmployees() {
 
     if (this.selectAllEmployees) {
@@ -95,22 +134,22 @@ export class Dashboard {
     
   }
 
-  updateEstimatedTotal() {
-  const selected =
-    this.selectAllEmployees
-      ? this.employeeOptions.map(e => e.value)
-      : this.selectedEmployees;
+//   updateEstimatedTotal() {
+//   const selected =
+//     this.selectAllEmployees
+//       ? this.employeeOptions.map(e => e.value)
+//       : this.selectedEmployees;
 
-  // dummy calculation (replace later with backend preview)
-  this.estimatedTotal = selected.length * 1000; // temporary
-}
-  // ================= SYNC "ALL" STATE =================
+//   // dummy calculation (replace later with backend preview)
+//   this.estimatedTotal = selected.length * 1000; // temporary
+// }
+  
   updateSelectAllState() {
     this.selectAllEmployees =
       this.selectedEmployees.length === this.employeeOptions.length;
   }
 
-  // ================= GENERATE PAYROLL =================
+ 
   generatePayroll() {
 
     if (!this.startDate || !this.endDate) {
@@ -143,7 +182,8 @@ export class Dashboard {
       });
   }
 
-  // ================= PDF GENERATOR =================
+  
+  
   generatePdf(data: any) {
 
     import('jspdf').then(jsPDF => {
@@ -169,21 +209,27 @@ export class Dashboard {
     });
   }
 
-  getInitials(name: string): string {
-  if (!name) return '';
+  getInitials(fullName?: string): string {
 
-  return name
-    .split(' ')
-    .map(x => x[0])
-    .slice(0, 2)
-    .join('')
-    .toUpperCase();
-}
+    if (!fullName) return '';
+
+    const names = fullName.trim().split(' ');
+
+    if (names.length === 1) {
+      return names[0].substring(0, 2).toUpperCase();
+    }
+
+    return (
+      names[0].charAt(0) +
+      names[1].charAt(0)
+    ).toUpperCase();
+  }
 
    loadAttendance(): void {
     this.attendanceService.getTodayAttendance().subscribe({
       next: (response) => {
         this.attendanceList = response;
+          this.cdr.detectChanges();
       },
       error: (error) => {
         console.error('Failed to load attendance', error);

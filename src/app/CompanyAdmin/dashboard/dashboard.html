@@ -86,8 +86,8 @@
                  (change)="toggleEmployee(emp.value, $event)" />
 
           <!-- avatar circle -->
-          <div class="avatar">
-            {{ emp.label.substring(0,2).toUpperCase() }}
+           <div class="avatar avatar-initials">
+            {{ getInitials(emp.label) }}
           </div>
 
           <div class="name">
@@ -132,37 +132,55 @@
   <!-- ================= STATS ================= -->
   <div class="stats-grid">
 
-    <div class="stat-card blue">
+  <div class="stat-card blue">
+    <div class="stat-header">
+       <i class="pi pi-users"></i>
       <span class="label">Total Employees</span>
-      <h3>125</h3>
     </div>
-
-    <div class="stat-card green">
-      <span class="label">Present Today</span>
-      <h3>98</h3>
-    </div>
-
-    <div class="stat-card red">
-      <span class="label">Absent Today</span>
-      <h3>12</h3>
-    </div>
-
-    <div class="stat-card yellow">
-      <span class="label">Late Today</span>
-      <h3>15</h3>
-    </div>
-
-    <div class="stat-card gray">
-      <span class="label">This Month Payroll</span>
-      <h3>₱325k</h3>
-    </div>
-
-    <div class="stat-card gray">
-      <span class="label">Pending Payroll</span>
-      <h3>₱45k</h3>
-    </div>
-
+    <h3>{{ employeeStats.totalEmployees }}</h3>
   </div>
+
+  <div class="stat-card green">
+    <div class="stat-header">
+      <i class="pi pi-check-circle"></i>
+      <span class="label">Present Today</span>
+    </div>
+    <h3>{{ attendanceStats.presentToday }}</h3>
+  </div>
+
+  <div class="stat-card red">
+    <div class="stat-header">
+      <i class="pi pi-times-circle"></i>
+      <span class="label">Absent Today</span>
+    </div>
+    <h3>{{ attendanceStats.absentToday }}</h3>
+  </div>
+
+  <div class="stat-card yellow">
+    <div class="stat-header">
+        <i class="pi pi-clock"></i>
+      <span class="label">Late Today</span>
+    </div>
+    <h3>15</h3>
+  </div>
+
+  <div class="stat-card gray">
+    <div class="stat-header">
+      <i class="pi pi-wallet"></i>
+      <span class="label">Month Payroll</span>
+    </div>
+    <h3>₱325k</h3>
+  </div>
+
+  <div class="stat-card gray">
+    <div class="stat-header">
+      <i class="pi pi-money-bill"></i>
+      <span class="label">Pending Payroll</span>
+    </div>
+    <h3>₱45k</h3>
+  </div>
+
+</div>
 
   <!-- ================= CHARTS ================= -->
   <div class="charts-grid">
