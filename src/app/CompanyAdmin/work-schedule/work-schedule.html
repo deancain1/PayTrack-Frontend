@@ -1,0 +1,274 @@
+<div class="work-schedule-container">
+
+  <!-- Header -->
+  <div class="page-header">
+    <h2>Work Schedule</h2>
+  </div>
+
+  <!-- Create Schedule Card -->
+<div class="card">
+
+  <div class="card-header">
+    <i class="pi pi-calendar-plus"></i>
+    <span>Create New Schedule</span>
+  </div>
+
+  <div class="card-body">
+
+    <form #scheduleForm="ngForm" (ngSubmit)="addSchedule()">
+
+      <div class="form-grid">
+
+        <!-- Schedule Name -->
+        <div class="form-group">
+          <label>Schedule Name</label>
+          <input
+            type="text"
+            name="scheduleName"
+            [(ngModel)]="scheduleName"
+            #scheduleNameCtrl="ngModel"
+            required
+            placeholder="e.g. Morning Shift"
+          />
+
+          <small
+            class="error"
+            *ngIf="scheduleNameCtrl.invalid && scheduleNameCtrl.touched">
+            Schedule name is required.
+          </small>
+        </div>
+
+        <!-- Schedule Type -->
+        <div class="form-group">
+          <label>Schedule Type</label>
+          <select
+            name="scheduleType"
+            [(ngModel)]="scheduleType"
+            required>
+
+            <option [ngValue]="0">Fixed</option>
+            <option [ngValue]="1">Flexible</option>
+
+          </select>
+        </div>
+
+        <!-- Start Time -->
+        <div class="form-group">
+          <label>Start Time</label>
+          <input
+            type="time"
+            name="startTime"
+            [(ngModel)]="startTime"
+            required
+          />
+        </div>
+
+        <!-- End Time -->
+        <div class="form-group">
+          <label>End Time</label>
+          <input
+            type="time"
+            name="endTime"
+            [(ngModel)]="endTime"
+            required
+          />
+        </div>
+
+        <!-- Required Hours -->
+        <div class="form-group">
+          <label>Required Hours</label>
+          <input
+            type="number"
+            name="requiredHours"
+            [(ngModel)]="requiredHours"
+            min="1"
+            required
+          />
+        </div>
+
+        <!-- Grace Period -->
+        <div class="form-group">
+          <label>Grace Period (Minutes)</label>
+          <input
+            type="number"
+            name="gracePeriodMinutes"
+            [(ngModel)]="gracePeriodMinutes"
+            min="0"
+            required
+          />
+        </div>
+
+      </div>
+
+      <div class="actions">
+
+        <button
+          type="button"
+          class="btn-reset"
+          (click)="resetForm()">
+          Reset
+        </button>
+
+        <button
+          type="submit"
+          class="btn-save"
+          [disabled]="scheduleForm.invalid"
+          (click)="addSchedule()">
+          Save Schedule
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+
+  <!-- Existing Schedules -->
+  <div class="card">
+
+    <div class="card-header table-header">
+
+      <div class="left">
+        <i class="pi pi-list"></i>
+        <span>Existing Schedules</span>
+      </div>
+
+      <div class="right">
+        <button class="icon-btn">
+          <i class="pi pi-filter"></i>
+        </button>
+
+        <button class="icon-btn">
+          <i class="pi pi-download"></i>
+        </button>
+      </div>
+
+    </div>
+
+    <div class="table-wrapper">
+
+  <p-table
+    [value]="(schedules$ | async) ?? []"
+    [tableStyle]="{ 'min-width': '100%' }"
+    responsiveLayout="scroll"
+  >
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Schedule Name</th>
+        <th>Type</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Required Hours</th>
+        <th>Grace Period</th>
+        <th class="text-right">Actions</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-schedule>
+      <tr>
+
+        <td>
+          <strong>{{ schedule.scheduleName }}</strong>
+        </td>
+
+        <td>
+          <span
+            class="badge"
+            [ngClass]="{
+              'fixed': schedule.scheduleType === 0,
+              'flexible': schedule.scheduleType === 1
+            }">
+
+            {{ schedule.scheduleType === 0 ? 'FIXED' : 'FLEXIBLE' }}
+
+          </span>
+        </td>
+
+        <td>
+          {{ schedule.startTime }}
+        </td>
+
+        <td>
+          {{ schedule.endTime }}
+        </td>
+
+        <td>
+          {{ schedule.requiredHours }} hrs
+        </td>
+
+        <td>
+          {{ schedule.gracePeriodMinutes }} mins
+        </td>
+
+        <td class="text-right">
+
+          <button class="table-icon">
+            <i class="pi pi-pencil"></i>
+          </button>
+
+          <button class="table-icon">
+            <i class="pi pi-trash"></i>
+          </button>
+
+        </td>
+
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="7" class="empty-state">
+          No schedules found.
+        </td>
+      </tr>
+    </ng-template>
+
+  </p-table>
+
+</div>
+
+<div class="table-footer">
+
+  <div class="entry-count">
+    Page <span>{{ pageNumber }}</span>
+    —
+    Showing
+    <span>{{ (schedules$ | async)?.length }}</span>
+    entries
+  </div>
+
+  <nav class="pagination">
+
+    <button
+      class="page-arrow"
+      [disabled]="pageNumber === 1"
+      (click)="loadPage({
+        first: (pageNumber - 2) * pageSize,
+        rows: pageSize
+      })"
+    >
+      &lt;
+    </button>
+
+    <button class="page-num active">
+      {{ pageNumber }}
+    </button>
+
+    <button
+      class="page-arrow"
+      (click)="loadPage({
+        first: pageNumber * pageSize,
+        rows: pageSize
+      })"
+    >
+      &gt;
+    </button>
+
+  </nav>
+
+</div>
+
+</div>
