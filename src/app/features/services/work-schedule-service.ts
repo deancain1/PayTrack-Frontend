@@ -15,6 +15,12 @@ export class WorkScheduleService {
       return this.apiService.post<WorkScheduleModel>('api/WorkSchedule/work-schedule', schedule);
     }
     
+    getSchedulesLookup() {
+      return this.apiService.get<WorkScheduleModel[]>(
+        'api/WorkSchedule/lookup'
+      );
+    }
+
     getSchedules(
       pageNumber: number,
       pageSize: number,
@@ -24,4 +30,14 @@ export class WorkScheduleService {
         `api/WorkSchedule?pageNumber=${pageNumber}&pageSize=${pageSize}&search=${search ?? ''}`
       );
     }
+
+     assignSchedule(employeeId: string, workScheduleId: string): Observable<void> {
+    return this.apiService.update<void>(
+      'api/WorkSchedule/assign-schedule',
+      {
+        employeeId,
+        workScheduleId
+      }
+    );
+  }
 }
