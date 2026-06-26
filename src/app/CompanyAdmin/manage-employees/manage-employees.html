@@ -1,21 +1,30 @@
 <div class="directory-container">
+
+  <!-- Header -->
   <header class="directory-header">
     <div class="header-title">
       <h1>Employee Directory</h1>
       <p>Manage your enterprise workforce and compensation structures.</p>
     </div>
 
-    <button class="btn btn-primary" (click)="openAddEmployeeDialog()">
-      <span class="icon-add">+</span> Add New Employee
+    <button
+      class="btn btn-primary"
+      (click)="openAddEmployeeDialog()">
+      <span class="icon-add">+</span>
+      Add New Employee
     </button>
   </header>
 
+  <!-- Add Employee Dialog -->
   <app-add-employee-dialog
     [(displayAddEmployeeVisible)]="addEmployeeDialogVisible"
     (created)="onEmployeeCreated($event)">
   </app-add-employee-dialog>
 
+  <!--Filters-->
   <section class="filters-card">
+
+    <!-- Search -->
     <div class="filter-group search-bar">
       <span class="search-icon">
         <i class="pi pi-search"></i>
@@ -25,56 +34,112 @@
         type="text"
         placeholder="Search by name, ID, or email..."
         [value]="searchTerm"
-        (input)="onSearch($event)"
-      />
+        (input)="onSearch($event)" />
     </div>
 
+    <!-- Department -->
     <div class="filter-group dropdown">
       <select>
         <option>All Departments</option>
       </select>
     </div>
 
+    <!-- Status -->
     <div class="filter-group dropdown">
       <select>
         <option>Status: All</option>
       </select>
     </div>
+
+    <!-- Work Schedule -->
+    <div class="filter-group dropdown">
+      <select [(ngModel)]="selectedScheduleId">
+
+        <option value="">
+          Select Schedule
+        </option>
+
+        <option
+          *ngFor="let schedule of workSchedules"
+          [value]="schedule.id">
+          {{ schedule.scheduleName }}
+        </option>
+
+      </select>
+    </div>
+
+    <!-- Assign Button -->
+    <div class="filter-group">
+      <button
+        class="assign-btn"
+        (click)="assignSchedule()"
+        [disabled]="!selectedScheduleId || selectedEmployees.length === 0">
+        Assign Schedule
+      </button>
+    </div>
+
   </section>
 
+  <!-- Employee Table -->
   <main class="table-container">
+
     <p-table
       [value]="(employees$ | async) ?? []"
       [tableStyle]="{ 'min-width': '100%' }"
       responsiveLayout="scroll"
-      styleClass="directory-table"
-    >
+      styleClass="directory-table">
+
+      <!-- Table Header -->
       <ng-template pTemplate="header">
         <tr>
+
+          <th style="width:50px">
+            <input
+              type="checkbox"
+              (change)="toggleAllEmployees($event)" />
+          </th>
+
           <th>Employee Name</th>
           <th>Employee Number</th>
           <th>Department</th>
-          <th>Role</th>
           <th>Status</th>
           <th>QR Code</th>
           <th class="text-right">Actions</th>
+
         </tr>
       </ng-template>
 
-      <ng-template pTemplate="body" let-user>
+      <!-- Table Body -->
+      <ng-template
+        pTemplate="body"
+        let-user>
+
         <tr>
+
+          <!-- Checkbox -->
+          <td>
+            <input
+              type="checkbox"
+              [checked]="selectedEmployees.some(x => x.id === user.id)"
+              (change)="toggleEmployee(user, $event)" />
+          </td>
+
+          <!-- Employee Info -->
           <td>
             <div class="employee-profile">
+
               <div class="avatar avatar-initials">
+
                 <img
                   *ngIf="user.profilePictureBase64"
                   class="user-avatar"
                   [src]="user.profilePictureBase64"
-                  alt="User Avatar"
-                />
+                  alt="Avatar" />
+
                 <span *ngIf="!user.profilePictureBase64">
                   {{ getInitials(user.fullName) }}
                 </span>
+
               </div>
 
               <div class="info">
@@ -86,52 +151,59 @@
                   {{ user.email }}
                 </span>
               </div>
+
             </div>
           </td>
 
+          <!-- Employee Number -->
           <td>
             {{ user.employeeNumber || 'N/A' }}
           </td>
 
+          <!-- Department -->
           <td>
             {{ user.department || 'Unassigned' }}
           </td>
 
-          <td>
-            {{ user.role || 'Employee' }}
-          </td>
-
+          <!-- Status -->
           <td>
             <span class="badge badge-active">
               {{ user.status || 'Active' }}
             </span>
           </td>
 
+          <!-- QR Code -->
           <td>
+
             <img
               *ngIf="user.qrCodeBase64"
               [src]="'data:image/png;base64,' + user.qrCodeBase64"
-              alt="QR Code"
               width="60"
               height="60"
-            />
+              alt="QR Code" />
 
             <span *ngIf="!user.qrCodeBase64">
               No QR
             </span>
+
           </td>
 
+          <!-- Actions -->
           <td class="text-right">
+
             <button
               class="btn-action"
-              (click)="generateQr(user)"
-            >
-              Generate QR
+              (click)="generateQr(user)">
+              <i class="pi pi-qrcode"></i>
             </button>
+
           </td>
+
         </tr>
+
       </ng-template>
 
+      <!-- Empty State -->
       <ng-template pTemplate="emptymessage">
         <tr>
           <td colspan="7" class="empty-state">
@@ -139,34 +211,44 @@
           </td>
         </tr>
       </ng-template>
+
     </p-table>
 
+    <!--Footer-->
     <footer class="table-footer">
+
       <div class="entry-count">
-        Page <span>{{ pageNumber }}</span>
+        Page
+        <span>{{ pageNumber }}</span>
         —
-        Showing <span>{{ (employees$ | async)?.length }}</span> entries
+        Showing
+        <span>{{ (employees$ | async)?.length }}</span>
+        entries
       </div>
 
       <nav class="pagination">
+
         <button
           class="page-arrow"
           [disabled]="pageNumber === 1"
-          (click)="loadPage({ first: (pageNumber - 2) * pageSize, rows: pageSize })"
-        >
+          (click)="loadPage({ first: (pageNumber - 2) * pageSize, rows: pageSize })">
           &lt;
         </button>
 
         <button class="page-num active">
           {{ pageNumber }}
+        </button>
 
         <button
           class="page-arrow"
-          (click)="loadPage({ first: pageNumber * pageSize, rows: pageSize })"
-        >
+          (click)="loadPage({ first: pageNumber * pageSize, rows: pageSize })">
           &gt;
         </button>
+
       </nav>
+
     </footer>
+
   </main>
+
 </div>

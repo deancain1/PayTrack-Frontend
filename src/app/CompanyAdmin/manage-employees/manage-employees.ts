@@ -10,7 +10,8 @@ import { AuthService } from '../../features/services/auth-service';
 import { EmployeesService } from '../../features/services/employees-service';
 
 import { Employee } from '../../features/models/employees/employees-model';
-
+import { WorkScheduleService } from '../../features/services/work-schedule-service';
+import { WorkScheduleModel } from '../../features/models/workschedule/work-schedule-model';
 @Component({
   selector: 'app-manage-employees',
   imports: [SharedModule, AddEmployeeDialog],
@@ -30,9 +31,15 @@ export class ManageEmployees implements OnInit {
   addEmployeeDialogVisible = false;
   creating = false;
 
+  workSchedules: WorkScheduleModel[] = [];
+  selectedScheduleId: string = '';
+
+  selectedEmployees: Employee[] = [];
+
   constructor(
     private authService: AuthService,
     private employeesService: EmployeesService,
+    private workScheduleService: WorkScheduleService,
     private messageService: MessageService
   ) {}
 
@@ -41,8 +48,19 @@ export class ManageEmployees implements OnInit {
       first: 0,
       rows: this.pageSize
     });
+
+     this.loadSchedulesLookup();
   }
 
+  loadSchedulesLookup(): void {
+  this.workScheduleService
+    .getSchedulesLookup()
+    .subscribe({
+      next: schedules => {
+        this.workSchedules = schedules;
+      }
+    });
+}
   loadPage(event: any): void {
 
     this.pageNumber = event.first / event.rows + 1;
@@ -189,4 +207,53 @@ export class ManageEmployees implements OnInit {
         }
       });
   }
+  toggleEmployee(employee: Employee, event: any): void {
+
+  if (event.target.checked) {
+
+    this.selectedEmployees.push(employee);
+
+  } else {
+
+    this.selectedEmployees =
+      this.selectedEmployees.filter(e => e.id !== employee.id);
+
+  }
+
+}
+
+toggleAllEmployees(event: any): void {
+
+  if (event.target.checked) {
+
+    this.selectedEmployees = [...this.employees$.value];
+
+  } else {
+
+    this.selectedEmployees = [];
+
+  }
+
+}
+assignSchedule(): void {
+
+  if (!this.selectedScheduleId) {
+    return;
+  }
+
+  this.selectedEmployees.forEach(employee => {
+
+    this.workScheduleService
+      .assignSchedule(employee.id, this.selectedScheduleId)
+      .subscribe({
+        next: () => {
+          console.log(`Assigned schedule to ${employee.fullName}`);
+        },
+        error: err => {
+          console.error(err);
+        }
+      });
+
+  });
+}
 }
