@@ -1,6 +1,6 @@
 <div class="dashboard-container">
 
-  <!-- ================= HEADER ================= -->
+  <!-- Header -->
   <div class="dashboard-header">
 
     <div>
@@ -9,7 +9,6 @@
     </div>
 
     <div class="header-actions">
-
       <button class="btn btn-light" (click)="openPayrollDialog()">
         Generate Payroll
       </button>
@@ -21,171 +20,195 @@
       <button class="btn btn-primary">
         Add Employee
       </button>
-
     </div>
 
   </div>
 
-  <!-- ================= PAYROLL DIALOG ================= -->
- <p-dialog
-  header="Generate Payroll Report"
-  [(visible)]="showPayrollDialog"
-  [modal]="true"
-  [style]="{ width: '650px' }"
-  [draggable]="false"
-  [resizable]="false"
-  styleClass="generate-payroll-dialog"
->
+  <!-- Payroll Dialog -->
+  <p-dialog
+    header="Generate Payroll Report"
+    [(visible)]="showPayrollDialog"
+    [modal]="true"
+    [style]="{ width: '650px' }"
+    [draggable]="false"
+    [resizable]="false"
+    styleClass="generate-payroll-dialog">
 
-  <div class="payroll-modal">
+    <div class="payroll-modal">
 
-    <!-- ================= PERIOD ================= -->
-    <div class="section">
-      <h4>PAYROLL PERIOD</h4>
+      <!-- Payroll Period -->
+      <div class="section">
 
-      <div class="row">
-        <div class="field">
-          <label>Period Start</label>
-          <input type="date" [(ngModel)]="startDate" class="form-control" />
-        </div>
+        <h4>PAYROLL PERIOD</h4>
 
-        <div class="field">
-          <label>Period End</label>
-          <input type="date" [(ngModel)]="endDate" class="form-control" />
-        </div>
-      </div>
-    </div>
+        <div class="row">
 
-    <hr />
-
-    <!-- ================= EMPLOYEES ================= -->
-    <div class="section">
-
-      <h4>SELECT EMPLOYEES</h4>
-
-      <!-- SEARCH (UI only for now) -->
-      <div class="search-box">
-        <input type="text" class="form-control" placeholder="Search..." />
-      </div>
-
-      <!-- ALL TOGGLE -->
-      <div class="all-toggle">
-        <input type="checkbox"
-               [(ngModel)]="selectAllEmployees"
-               (change)="toggleAllEmployees()" />
-        <label>All Employees</label>
-      </div>
-
-      <!-- EMPLOYEE LIST -->
-      <div class="employee-list">
-
-        <div *ngFor="let emp of employeeOptions" class="employee-item">
-
-          <input type="checkbox"
-                 [checked]="isSelected(emp.value)"
-                 (change)="toggleEmployee(emp.value, $event)" />
-
-          <!-- avatar circle -->
-           <div class="avatar avatar-initials">
-            {{ getInitials(emp.label) }}
+          <div class="field">
+            <label>Period Start</label>
+            <input
+              type="date"
+              [(ngModel)]="startDate"
+              class="form-control" />
           </div>
 
-          <div class="name">
-            {{ emp.label }}
+          <div class="field">
+            <label>Period End</label>
+            <input
+              type="date"
+              [(ngModel)]="endDate"
+              class="form-control" />
           </div>
 
         </div>
 
       </div>
 
-    </div>
+      <hr />
 
-    <!-- ================= FOOTER SUMMARY ================= -->
-    <div class="footer-summary">
+      <!-- Select Employees -->
+      <div class="section">
 
-      <div class="summary-left">
-        <small>SELECTED EMPLOYEES</small>
-        <h3>{{ selectedEmployees.length }} Selected</h3>
+        <h4>SELECT EMPLOYEES</h4>
+
+        <!-- Search -->
+        <div class="search-box">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Search..." />
+        </div>
+
+        <!-- Select All -->
+        <div class="all-toggle">
+          <input
+            type="checkbox"
+            [(ngModel)]="selectAllEmployees"
+            (change)="toggleAllEmployees()" />
+
+          <label>All Employees</label>
+        </div>
+
+        <!-- Employee List -->
+        <div class="employee-list">
+
+          <div
+            *ngFor="let emp of employeeOptions"
+            class="employee-item">
+
+            <input
+              type="checkbox"
+              [checked]="isSelected(emp.value)"
+              (change)="toggleEmployee(emp.value, $event)" />
+
+            <div class="avatar avatar-initials">
+              {{ getInitials(emp.label) }}
+            </div>
+
+            <div class="name">
+              {{ emp.label }}
+            </div>
+
+          </div>
+
+        </div>
+
       </div>
 
-      
+      <!-- Footer Summary -->
+      <div class="footer-summary">
+
+        <div class="summary-left">
+          <small>SELECTED EMPLOYEES</small>
+          <h3>{{ selectedEmployees.length }} Selected</h3>
+        </div>
+
+      </div>
+
+      <!-- Actions -->
+      <div class="actions">
+
+        <button
+          class="btn btn-secondary"
+          (click)="closeDialog()">
+          Cancel
+        </button>
+
+        <button
+          class="btn btn-primary"
+          (click)="generatePayroll()">
+          Generate PDF
+        </button>
+
+      </div>
 
     </div>
 
-    <!-- ================= ACTIONS ================= -->
-    <div class="actions">
+  </p-dialog>
 
-      <button class="btn btn-secondary" (click)="closeDialog()">
-        Cancel
-      </button>
-
-      <button class="btn btn-primary" (click)="generatePayroll()">
-        Generate PDF
-      </button>
-
-    </div>
-
-  </div>
-
-</p-dialog>
-
-  <!-- ================= STATS ================= -->
+  <!-- Statistics -->
   <div class="stats-grid">
 
-  <div class="stat-card blue">
-    <div class="stat-header">
-       <i class="pi pi-users"></i>
-      <span class="label">Total Employees</span>
-    </div>
-    <h3>{{ employeeStats.totalEmployees }}</h3>
-  </div>
+    <div class="stat-card blue">
+      <div class="stat-header">
+        <i class="pi pi-users"></i>
+        <span class="label">Total Employees</span>
+      </div>
 
-  <div class="stat-card green">
-    <div class="stat-header">
-      <i class="pi pi-check-circle"></i>
-      <span class="label">Present Today</span>
+      <h3>{{ employeeStats.totalEmployees }}</h3>
     </div>
-    <h3>{{ attendanceStats.presentToday }}</h3>
-  </div>
 
-  <div class="stat-card red">
-    <div class="stat-header">
-      <i class="pi pi-times-circle"></i>
-      <span class="label">Absent Today</span>
+    <div class="stat-card green">
+      <div class="stat-header">
+        <i class="pi pi-check-circle"></i>
+        <span class="label">Present Today</span>
+      </div>
+
+      <h3>{{ attendanceStats.presentToday }}</h3>
     </div>
-    <h3>{{ attendanceStats.absentToday }}</h3>
-  </div>
 
-  <div class="stat-card yellow">
-    <div class="stat-header">
+    <div class="stat-card red">
+      <div class="stat-header">
+        <i class="pi pi-times-circle"></i>
+        <span class="label">Absent Today</span>
+      </div>
+
+      <h3>{{ attendanceStats.absentToday }}</h3>
+    </div>
+
+    <div class="stat-card yellow">
+      <div class="stat-header">
         <i class="pi pi-clock"></i>
-      <span class="label">Late Today</span>
+        <span class="label">Late Today</span>
+      </div>
+
+      <h3>{{ attendanceStats.lateToday }}</h3>
     </div>
-    <h3>15</h3>
+
+    <div class="stat-card gray">
+      <div class="stat-header">
+        <i class="pi pi-wallet"></i>
+        <span class="label">Month Payroll</span>
+      </div>
+
+      <h3>₱325k</h3>
+    </div>
+
+    <div class="stat-card gray">
+      <div class="stat-header">
+        <i class="pi pi-money-bill"></i>
+        <span class="label">Pending Payroll</span>
+      </div>
+
+      <h3>₱45k</h3>
+    </div>
+
   </div>
 
-  <div class="stat-card gray">
-    <div class="stat-header">
-      <i class="pi pi-wallet"></i>
-      <span class="label">Month Payroll</span>
-    </div>
-    <h3>₱325k</h3>
-  </div>
-
-  <div class="stat-card gray">
-    <div class="stat-header">
-      <i class="pi pi-money-bill"></i>
-      <span class="label">Pending Payroll</span>
-    </div>
-    <h3>₱45k</h3>
-  </div>
-
-</div>
-
-  <!-- ================= CHARTS ================= -->
+  <!-- Charts -->
   <div class="charts-grid">
 
     <div class="card payroll-chart">
+
       <div class="card-header">
         <h4>Monthly Payroll Expenses</h4>
       </div>
@@ -193,6 +216,7 @@
       <div class="chart-placeholder">
         Chart Here
       </div>
+
     </div>
 
     <div class="card attendance-card">
@@ -202,114 +226,152 @@
       </div>
 
       <div class="progress-item">
+
         <div class="title">
           <span>Present</span>
-          <span>78%</span>
+          <span>
+            {{ attendanceStats.presentPercentage | number:'1.0-0' }}%
+          </span>
         </div>
+
         <div class="progress">
-          <div class="progress-fill green-fill" style="width:78%"></div>
+          <div
+            class="progress-fill green-fill"
+            [style.width.%]="attendanceStats.presentPercentage">
+          </div>
         </div>
+
       </div>
 
       <div class="progress-item">
+
         <div class="title">
           <span>Late</span>
-          <span>12%</span>
+          <span>
+            {{ attendanceStats.latePercentage | number:'1.0-0' }}%
+          </span>
         </div>
+
         <div class="progress">
-          <div class="progress-fill yellow-fill" style="width:12%"></div>
+          <div
+            class="progress-fill yellow-fill"
+            [style.width.%]="attendanceStats.latePercentage">
+          </div>
         </div>
+
       </div>
 
       <div class="progress-item">
+
         <div class="title">
           <span>Absent</span>
-          <span>10%</span>
+          <span>
+            {{ attendanceStats.absentPercentage | number:'1.0-0' }}%
+          </span>
         </div>
+
         <div class="progress">
-          <div class="progress-fill red-fill" style="width:10%"></div>
+          <div
+            class="progress-fill red-fill"
+            [style.width.%]="attendanceStats.absentPercentage">
+          </div>
         </div>
+
       </div>
 
       <p class="attendance-note">
-        Based on 125 active employees today.
+        Based on {{ attendanceStats.totalToday }} attendance records today.
       </p>
 
     </div>
 
   </div>
 
-  <!-- ================= ATTENDANCE TABLE ================= -->
+  <!-- Recent Attendance -->
   <div class="card attendance-table">
 
-  <div class="card-header">
-    <h4>Recent Attendance Logs</h4>
+    <div class="card-header">
+      <h4>Recent Attendance Logs</h4>
+    </div>
+
+    <p-table
+      [value]="attendanceList"
+      responsiveLayout="scroll"
+      styleClass="directory-table">
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Employee</th>
+          <th>Employee Number</th>
+          <th>Time In</th>
+          <th>Time Out</th>
+        </tr>
+      </ng-template>
+
+      <ng-template
+        pTemplate="body"
+        let-item>
+
+        <tr>
+
+          <td>
+
+            <div class="employee-profile">
+
+              <div class="avatar avatar-initials">
+
+                <img
+                  *ngIf="item.photoBase64"
+                  class="user-avatar"
+                  [src]="item.photoBase64"
+                  alt="Employee Avatar" />
+
+                <span *ngIf="!item.photoBase64">
+                  {{ getInitials(item.fullName) }}
+                </span>
+
+              </div>
+
+              <div class="info">
+                <span class="name">
+                  {{ item.fullName }}
+                </span>
+              </div>
+
+            </div>
+
+          </td>
+
+          <td>
+            {{ item.employeeNumber }}
+          </td>
+
+          <td>
+            {{ item.timeIn }}
+          </td>
+
+          <td>
+            {{ item.timeOut }}
+          </td>
+
+        </tr>
+
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+
+        <tr>
+          <td
+            colspan="4"
+            class="empty-state">
+            No attendance records found today.
+          </td>
+        </tr>
+
+      </ng-template>
+
+    </p-table>
+
   </div>
 
-  <p-table
-    [value]="attendanceList"
-    responsiveLayout="scroll"
-    styleClass="directory-table">
-
-    <ng-template pTemplate="header">
-      <tr>
-        <th>Employee</th>
-        <th>Employee Number</th>
-        <th>Time In</th>
-        <th>Time Out</th>
-      </tr>
-    </ng-template>
-
-    <ng-template pTemplate="body" let-item>
-      <tr>
-        <td>
-          <div class="employee-profile">
-
-            <div class="avatar avatar-initials">
-              <img
-                *ngIf="item.photoBase64"
-                class="user-avatar"
-                [src]="item.photoBase64"
-                alt="Employee Avatar"
-              />
-
-              <span *ngIf="!item.photoBase64">
-                {{ getInitials(item.fullName) }}
-              </span>
-            </div>
-
-            <div class="info">
-              <span class="name">
-                {{ item.fullName }}
-              </span>
-            </div>
-
-          </div>
-        </td>
-
-        <td>
-          {{ item.employeeNumber }}
-        </td>
-
-        <td>
-          {{ item.timeIn }}
-        </td>
-
-        <td>
-          {{ item.timeOut }}
-        </td>
-      </tr>
-    </ng-template>
-
-    <ng-template pTemplate="emptymessage">
-      <tr>
-        <td colspan="4" class="empty-state">
-          No attendance records found today.
-        </td>
-      </tr>
-    </ng-template>
-
-  </p-table>
-
-</div>
 </div>

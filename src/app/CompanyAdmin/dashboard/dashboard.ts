@@ -35,9 +35,15 @@ export class Dashboard {
 
   attendanceStats: AttendanceStatsModel = {
   presentToday: 0,
-  absentToday: 0
-};
+  lateToday: 0,
+  absentToday: 0,
 
+  totalToday: 0,
+
+  presentPercentage: 0,
+  latePercentage: 0,
+  absentPercentage: 0
+};
   attendanceList: AttendanceModel[] = [];
    
   constructor(
