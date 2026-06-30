@@ -21,7 +21,7 @@
     (created)="onEmployeeCreated($event)">
   </app-add-employee-dialog>
 
-  <!--Filters-->
+  <!-- Filters -->
   <section class="filters-card">
 
     <!-- Search -->
@@ -72,13 +72,51 @@
     <div class="filter-group">
       <button
         class="assign-btn"
-        (click)="assignSchedule()"
+        (click)="openAssignScheduleDialog()"
         [disabled]="!selectedScheduleId || selectedEmployees.length === 0">
         Assign Schedule
       </button>
     </div>
 
   </section>
+
+  <!-- Assign Schedule Dialog -->
+  <p-dialog
+    header="Choose a Date"
+    [(visible)]="assignScheduleDialogVisible"
+    [modal]="true"
+    [style]="{ width: '400px' }"
+    [closable]="false">
+
+    <div class="field">
+
+      <label for="effectiveDate">Effective Date</label>
+
+      <input
+        id="effectiveDate"
+        type="date"
+        class="form-control"
+        [(ngModel)]="scheduleEffectiveDate" />
+
+    </div>
+
+    <ng-template pTemplate="footer">
+
+      <button
+        pButton
+        label="Cancel"
+        (click)="assignScheduleDialogVisible = false">
+      </button>
+
+      <button
+        pButton
+        label="Assign"
+        (click)="assignSchedule()">
+      </button>
+
+    </ng-template>
+
+  </p-dialog>
 
   <!-- Employee Table -->
   <main class="table-container">
@@ -93,7 +131,7 @@
       <ng-template pTemplate="header">
         <tr>
 
-          <th style="width:50px">
+          <th style="width: 50px">
             <input
               type="checkbox"
               (change)="toggleAllEmployees($event)" />
@@ -206,7 +244,9 @@
       <!-- Empty State -->
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="7" class="empty-state">
+          <td
+            colspan="7"
+            class="empty-state">
             No employees found.
           </td>
         </tr>
@@ -214,7 +254,7 @@
 
     </p-table>
 
-    <!--Footer-->
+    <!-- Footer -->
     <footer class="table-footer">
 
       <div class="entry-count">

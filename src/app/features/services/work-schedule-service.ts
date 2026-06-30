@@ -31,12 +31,13 @@ export class WorkScheduleService {
       );
     }
 
-     assignSchedule(employeeId: string, workScheduleId: string): Observable<void> {
+     assignSchedule(employeeId: string, workScheduleId: string, scheduleEffectiveDate: Date): Observable<void> {
     return this.apiService.update<void>(
       'api/WorkSchedule/assign-schedule',
       {
         employeeId,
-        workScheduleId
+        workScheduleId, 
+        scheduleEffectiveDate
       }
     );
   }

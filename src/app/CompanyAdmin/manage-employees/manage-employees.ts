@@ -12,9 +12,10 @@ import { EmployeesService } from '../../features/services/employees-service';
 import { Employee } from '../../features/models/employees/employees-model';
 import { WorkScheduleService } from '../../features/services/work-schedule-service';
 import { WorkScheduleModel } from '../../features/models/workschedule/work-schedule-model';
+import { DatePickerModule } from 'primeng/datepicker';
 @Component({
   selector: 'app-manage-employees',
-  imports: [SharedModule, AddEmployeeDialog],
+  imports: [SharedModule, AddEmployeeDialog, DatePickerModule],
   templateUrl: './manage-employees.html',
   styleUrl: './manage-employees.scss',
 })
@@ -35,6 +36,9 @@ export class ManageEmployees implements OnInit {
   selectedScheduleId: string = '';
 
   selectedEmployees: Employee[] = [];
+
+  assignScheduleDialogVisible = false;
+  scheduleEffectiveDate: Date | null = null;
 
   constructor(
     private authService: AuthService,
@@ -237,23 +241,56 @@ toggleAllEmployees(event: any): void {
 }
 assignSchedule(): void {
 
-  if (!this.selectedScheduleId) {
+  if (!this.selectedScheduleId || !this.scheduleEffectiveDate) {
     return;
   }
+
+  let completed = 0;
 
   this.selectedEmployees.forEach(employee => {
 
     this.workScheduleService
-      .assignSchedule(employee.id, this.selectedScheduleId)
+      .assignSchedule(
+        employee.id,
+        this.selectedScheduleId,
+        this.scheduleEffectiveDate!
+      )
       .subscribe({
         next: () => {
-          console.log(`Assigned schedule to ${employee.fullName}`);
+
+          completed++;
+
+          if (completed === this.selectedEmployees.length) {
+
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Schedule assigned successfully.'
+            });
+
+            this.assignScheduleDialogVisible = false;
+
+            this.selectedEmployees = [];
+          }
         },
-        error: err => {
-          console.error(err);
+        error: () => {
+
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: `Failed to assign schedule to ${employee.fullName}`
+          });
         }
       });
 
   });
+
+}
+
+openAssignScheduleDialog(): void {
+
+  this.scheduleEffectiveDate = new Date();
+
+  this.assignScheduleDialogVisible = true;
 }
 }
